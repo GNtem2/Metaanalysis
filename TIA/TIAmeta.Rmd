@@ -1,0 +1,48 @@
+---
+title: "TIAmeta"
+author: "gntem2"
+date: "10/04/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r TIAmeta}
+#TIA project
+#meta-analysis of TIA recurrence at 3 months
+
+#install software from R
+#install.packages("metafor")
+
+#open software metafor
+library(metafor)
+
+dat <- data.frame(model=c("melbourne","paris","oxford","stanford","ottawa","new zealand"),
+xi=c(7,7,6,2,31,2), 
+ni=c(468,296, 281,223,982,172))
+dat$pi <- with(dat, xi/ni)
+dat <- escalc(measure="PFT", xi=xi, ni=ni, data=dat, add=0)	
+res <- rma(yi, vi, method="REML", data=dat, slab=paste(model))
+
+forest(res, transf=transf.ipft.hm, targs=list(ni=dat$ni), xlim=c(-1,1.5),refline=0.020,cex=.8, ilab=cbind(dat$xi, dat$ni),
+       ilab.xpos=c(-.6,-.4),digits=3)
+op <- par(cex=.75, font=2)
+text(-1.0,                7.5, "model ",     pos=4)
+text(c(-.55,-.2), 	7.5, c("recurrence", 	" total subjects"))
+
+text(1.4,                  7.5, "frequency [95% CI]", pos=2)
+par(op)
+
+
+```
+
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.

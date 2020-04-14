@@ -1,0 +1,488 @@
+---
+title: "Spotsign"
+author: "gntem2"
+date: "16 October 2017"
+output: html_document
+---
+##modified 6/7/18
+###bivariate analysis
+####metaregression
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r data location, echo=FALSE}
+rm(list=ls())
+library(metafor)
+Dat<-read.csv("ss150718.csv") #040718 #36
+#dat<-na.omit(dat[,c(1:8)])
+
+#remove duplicates
+
+dat<-subset(Dat, Dat$retain=="yes") #27
+
+#############
+#retrospective vs prospective
+datretro<-subset(dat, dat$Study.type=="Retro")
+
+#compare clinical
+datclin<-subset(dat, dat$clinical==1)
+
+#compare CTA<6hr
+datlt6h<-subset(dat, dat$CTA6hrs=="yes")
+datgt6h<-subset(dat,dat$CTA6hrs=="no")
+
+#subset Du's data
+DuSS<-subset(Dat,Dat$metaDu=="yes") #14
+
+#subset Xu data
+XuSS<-subset(Dat,Dat$metaXu=="yes") #14
+```
+
+```{r predictive value}
+
+#############
+#predictive value of spot sign for our data
+dat$xi=(dat$TP)
+dat$ni=(dat$TP+dat$FP)
+dat$pi <- with(dat, xi/ni)
+dat <- escalc(measure="PFT", xi=xi, ni=ni, data=dat, add=0) 
+res <- rma(yi, vi, method="REML", data=dat, slab=paste(Authors))
+result<-predict(res, transf=transf.ipft.hm, targs=list(ni=dat$ni))
+result$pred
+forest(res, transf=transf.ipft.hm, targs=list(ni=dat$ni), main="pooled positive predictive value of spot sign for ICH growth", xlim=c(-1,1.5),
+       refline=result$pred,cex=.5, ilab=cbind(dat$PubYear,dat$xi, dat$ni),
+       ilab.xpos=c(-.55,-.25,-.05),digits=3)
+op <- par(cex=.5, font=2)
+text(-1.0,      29, "author ",     pos=4)
+text(c(-.55,-.275,-.025),   29, c("year", "growth", "subjects"))
+text(1.5,                  29, "PPV [95% CI]", pos=2)
+```
+
+```{r predictive value Du}
+#predicive value for spot sign Du
+DuSS$xi=(DuSS$TP)
+DuSS$ni=(DuSS$TP+DuSS$FP)
+DuSS$pi <- with(DuSS, xi/ni)
+DuSS <- escalc(measure="PFT", xi=xi, ni=ni, data=DuSS, add=0) 
+res <- rma(yi, vi, method="REML", data=DuSS, slab=paste(Authors))
+result<-predict(res, transf=transf.ipft.hm, targs=list(ni=DuSS$ni))
+result$pred
+forest(res, transf=transf.ipft.hm, targs=list(ni=DuSS$ni), main="pooled positive predictive value of spot sign for ICH growth in Du", xlim=c(-1,1.5),
+       refline=result$pred,cex=.5, ilab=cbind(dat$PubYear,DuSS$xi, DuSS$ni),
+       ilab.xpos=c(-.55,-.25,-.05),digits=3)
+op <- par(cex=.5, font=2)
+text(-1.0,      29, "author ",     pos=4)
+text(c(-.55,-.275,-.025),   29, c("year", "growth", "subjects"))
+text(1.5,                  29, "PPV [95% CI]", pos=2)
+```
+
+```{r predictive value Xu}
+#predicive value for spot sign Du
+XuSS$xi=(XuSS$TP)
+XuSS$ni=(XuSS$TP+XuSS$FP)
+XuSS$pi <- with(XuSS, xi/ni)
+XuSS <- escalc(measure="PFT", xi=xi, ni=ni, data=XuSS, add=0) 
+res <- rma(yi, vi, method="REML", data=XuSS, slab=paste(Authors))
+result<-predict(res, transf=transf.ipft.hm, targs=list(ni=XuSS$ni))
+result$pred
+forest(res, transf=transf.ipft.hm, targs=list(ni=XuSS$ni), main="pooled positive predictive value of spot sign for ICH growth in Du", xlim=c(-1,1.5),
+       refline=result$pred,cex=.5, ilab=cbind(dat$PubYear,XuSS$xi, XuSS$ni),
+       ilab.xpos=c(-.55,-.25,-.05),digits=3)
+op <- par(cex=.5, font=2)
+text(-1.0,      29, "author ",     pos=4)
+text(c(-.55,-.275,-.025),   29, c("year", "growth", "subjects"))
+text(1.5,                  29, "PPV [95% CI]", pos=2)
+```
+
+##prevalence spot sign
+```{r prevalence}
+#estimate prevalence of spot sign in our study
+dat$xi=(dat$TP+dat$FN)
+dat$ni=(dat$TP+dat$FP+dat$FN+dat$TN)
+dat$pi <- with(dat, xi/ni)
+dat <- escalc(measure="PFT", xi=xi, ni=ni, data=dat, add=0) 
+res <- rma(yi, vi, method="REML", data=dat, slab=paste(Authors))
+result<-predict(res, transf=transf.ipft.hm, targs=list(ni=dat$ni))
+result$pred
+
+forest(res, transf=transf.ipft.hm, targs=list(ni=dat$ni), main="pooled prevalence of spot sign", xlim=c(-1,1.5),refline=result$pred,cex=.5, ilab=cbind(dat$PubYear,dat$xi, dat$ni),
+       ilab.xpos=c(-.55,-.25,-.05),digits=3)
+op <- par(cex=.5, font=3)
+text(-1.0,      29, "author ",     pos=4)
+text(c(-.55,-.275,-.025),   29, c("year", "growth", "subjects"))
+text(2.5,                  29, "prevalence [95% CI]", pos=2)
+
+#Du study
+DuSS$xi=(DuSS$TP+DuSS$FN)
+DuSS$ni=(DuSS$TP+DuSS$FP+DuSS$FP+DuSS$TN)
+DuSS$pi <- with(DuSS, xi/ni)
+DuSS <- escalc(measure="PFT", xi=xi, ni=ni, data=DuSS, add=0) 
+res <- rma(yi, vi, method="REML", data=DuSS, slab=paste(Authors))
+result<-predict(res, transf=transf.ipft.hm, targs=list(ni=DuSS$ni))
+result$pred
+forest(res, transf=transf.ipft.hm, targs=list(ni=DuSS$ni), main="pooled prevalence of spot sign Du", xlim=c(-1,1.5),
+       refline=result$pred,cex=.5, ilab=cbind(DuSS$PubYear,DuSS$xi, DuSS$ni),
+       ilab.xpos=c(-.55,-.25,-.05),digits=3)
+op <- par(cex=.5, font=3)
+text(-1.0,      29, "author ",     pos=4)
+text(c(-.55,-.275,-.025),   29, c("year", "growth", "subjects"))
+text(4.5,                  29, "PPV [95% CI]", pos=2)
+
+#Xu study
+XuSS$xi=(XuSS$TP+XuSS$FN)
+XuSS$ni=(XuSS$TP+XuSS$FP+XuSS$FP+XuSS$TN)
+XuSS$pi <- with(XuSS, xi/ni)
+XuSS <- escalc(measure="PFT", xi=xi, ni=ni, data=XuSS, add=0) 
+res <- rma(yi, vi, method="REML", data=XuSS, slab=paste(Authors))
+result<-predict(res, transf=transf.ipft.hm, targs=list(ni=XuSS$ni))
+result$pred
+forest(res, transf=transf.ipft.hm, targs=list(ni=XuSS$ni), main="pooled prevalence of spot sign Xu", xlim=c(-1,1.5),
+       refline=result$pred,cex=.5, ilab=cbind(XuSS$PubYear,XuSS$xi,XuSS$ni),
+       ilab.xpos=c(-.55,-.25,-.05),digits=3)
+op <- par(cex=.5, font=4)
+text(-1.0,      29, "author ",     pos=4)
+text(c(-.55,-.275,-.025),   29, c("year", "growth", "subjects"))
+text(2.5,                  29, "PPV [95% CI]", pos=2)
+```
+##ich growth
+```{r ich growth}
+#ich growth
+dat$xi=(dat$TP+dat$FN)
+dat$ni=(dat$TP+dat$FP+dat$FN+dat$TN)
+dat$pi <- with(dat, xi/ni)
+dat <- escalc(measure="PFT", xi=xi, ni=ni, data=dat, add=0) 
+res <- rma(yi, vi, method="REML", data=dat, slab=paste(Authors))
+result<-predict(res, transf=transf.ipft.hm, targs=list(ni=dat$ni))
+result$pred
+forest(res, transf=transf.ipft.hm, targs=list(ni=dat$ni), main="pooled prevalence of ICH growth ", xlim=c(-1,1.5),refline=result$pred,cex=.5, ilab=cbind(dat$PubYear,dat$xi, dat$ni),
+       ilab.xpos=c(-.55,-.25,-.05),digits=3)
+op <- par(cex=.5, font=2)
+text(-1.0,      29, "author ",     pos=4)
+text(c(-.55,-.275,-.025),   29, c("year", "growth", "subjects"))
+text(1.5,                  29, "prevalence [95% CI]", pos=2)
+
+```
+
+##negative predictive value
+```{r neg predictive value}
+#negative predictive value
+dat$xi=(dat$TN)
+dat$ni=(dat$TN+dat$FN)
+dat$pi <- with(dat, xi/ni)
+dat <- escalc(measure="PFT", xi=xi, ni=ni, data=dat, add=0) 
+res <- rma(yi, vi, method="REML", data=dat, slab=paste(Authors))
+result<-predict(res, transf=transf.ipft.hm, targs=list(ni=dat$ni))
+result$pred
+forest(res, transf=transf.ipft.hm, targs=list(ni=dat$ni), main="pooled negative predictive value of spot sign for ICH growth", xlim=c(-1,1.5),refline=result$pred,cex=.5, ilab=cbind(dat$PubYear,dat$xi, dat$ni),
+       ilab.xpos=c(-.55,-.25,-.05),digits=3)
+op <- par(cex=.5, font=2)
+text(-1.0,      29, "author ",     pos=4)
+text(c(-.55,-.275,-.025),   29, c("year", "growth", "subjects"))
+text(1.5,                  29, "NPV [95% CI]", pos=2)
+
+```
+##univariate
+```{r univariate}
+library(mada)
+#open mada after metafor as both share forest plot
+posLR.DSL <- madauni(dat, type = "posLR", method = "DSL")
+summary(posLR.DSL)
+forest(posLR.DSL)
+
+#
+negLR.DSL <- madauni(dat, type = "negLR", method = "DSL")
+summary(negLR.DSL)
+forest(negLR.DSL)
+
+```
+##bivariate analysis
+```{r bivariate sroc}
+(ss<-reitsma(dat))
+summary(ss)
+AUC(reitsma(data = dat))
+sumss<-SummaryPts(ss,n.iter = 10^3) #bivariate pooled LR
+summary(sumss)
+
+#plot year against tsens
+library(ggplot2)
+library(lubridate)
+
+ssr<-as.data.frame(ss$residuals)
+ssr$Year<-as.Date(as.character(dat$PubYear),"%Y")
+ssr$Quality<-dat$Quality.assessment
+
+p<-ggplot(ssr, aes(x=ssr$Year,y=ssr$tsens))+geom_point()+scale_x_date()+geom_smooth(method="lm")+
+  #ggtitle("Relationship between transformed sensitivity and Publication Year")+
+  labs(x="Year",y="transformed sensitivity")
+p
+
+#create high res figure
+tiff("Figure1a.tiff", width = 4, height = 4, units = 'in', res = 300, compression = 'none')
+p # Make plot
+dev.off()
+
+#
+p1<-ggplot(ssr, aes(x=ssr$Quality,y=ssr$tsens))+geom_point()+geom_smooth(method="lm")+
+  #ggtitle("Relationship between transformed sensitivity and Quality")+
+  labs(x="Year",y="transformed sensitivity")
+p1
+
+
+
+q<-ggplot(ssr, aes(x=ssr$Year,y=ssr$tfpr))+geom_point()+scale_x_date()+geom_smooth(method="lm")+labs(x="Year",y="transformed FPR")
+q
+
+
+q1<-ggplot(ssr, aes(x=ssr$Quality,y=ssr$tfpr))+geom_point()+scale_x_continuous(limits=c(34,48))+geom_smooth(method="lm")+
+  #ggtitle("Relationship between transformed false positive rate and Quality Score")+
+  labs(x="Quality Score",y="transformed FPR")
+q1
+
+#create high res figure
+tiff("Figure2b.tiff", width = 4, height = 4, units = 'in', res = 300, compression = 'none')
+q1 # Make plot
+dev.off()
+
+```
+
+```{r bivariate}
+#compare retro vs prospective study
+#datretro<-subset(dat, dat$Study.type=="Retro")
+datpros<-subset(dat,dat$Study.type=="Prospective")
+
+srocretro<-reitsma(datretro)
+AUC(srocretro)$AUC
+sr1<-SummaryPts(srocretro,n.iter = 1000) #mc
+summary(sr1)
+
+#talpha
+fit.retro <- reitsma(datretro, alphasens = 0, alphafpr = 2, method = "ml") 
+summary(fit.retro)
+#
+
+srocpros<-reitsma(datpros)
+AUC(srocpros)$AUC
+
+#par(mfrow=c(2,2))
+#plot(srocretro, xlim = c(0,.5), ylim = c(.5,1), 
+ #    main = "Comparison of Retrospective and Prospective studies") 
+
+#create high res figure
+tiff("Figure1retro.tiff", width = 6, height = 4, units = 'in', res = 300, compression = 'none')
+plot(srocretro, xlim = c(0,.5), ylim = c(.5,1))
+lines(sroc(srocpros), lty = 2) 
+ROCellipse(srocpros, lty = 2, pch = 2, add = TRUE) 
+points(fpr(datretro), sens(datretro), cex = .5)
+points(fpr(datpros), sens(datpros), pch = 2, cex = 0.5) 
+legend("bottomright",c("AUC Retrospective=0.87","AUC Prospective=0.85"),pch = 1:2, lty = 1:2)
+dev.off()
+##################################
+
+#compare clinical
+#datclin<-subset(dat, dat$clinical==1)
+datclinno<-subset(dat,dat$clinical==0)
+
+srocclin<-reitsma(datclin)
+AUC(srocclin)$AUC
+srocclinno<-reitsma(datclinno)
+AUC(srocclinno)$AUC
+
+#create high res figure
+tiff("Figure1clin.tiff", width = 6, height = 4, units = 'in', res = 300, compression = 'none')
+#plot(srocclin, xlim = c(0,.5), ylim = c(.5,1), 
+ #    main = "Comparison of studies with available clinical data") 
+plot(srocclin, xlim = c(0,.5), ylim = c(.5,1))
+lines(sroc(srocclinno), lty = 2) 
+ROCellipse(srocclinno, lty = 2, pch = 2, add = TRUE) 
+points(fpr(datclin), sens(datclin), cex = .5)
+points(fpr(datclinno), sens(datclinno), pch = 2, cex = 0.5) 
+legend("bottomright", c("AUC Clinical data=0.86","AUC Without clinical=0.86"), pch = 1:2, lty = 1:2)
+dev.off()
+
+#compare CTA<6hr
+sroclt6h<-reitsma(datlt6h)
+AUC(sroclt6h)$AUC
+srocgt6h<-reitsma(datgt6h)
+AUC(srocgt6h)$AUC
+
+
+#high resolution
+tiff("Figure16hr.tiff", width = 6, height = 4, units = 'in', res = 300, compression = 'none')
+#plot(sroclt6h, xlim = c(0,.5), ylim = c(.5,1),
+ #    main = "Comparison of studies with CTA within 6 hours") 
+plot(sroclt6h, xlim = c(0,.5), ylim = c(.5,1))
+lines(sroc(srocgt6h), lty = 2) 
+ROCellipse(srocgt6h, lty = 2, pch = 2, add = TRUE) 
+
+points(fpr(datlt6h), sens(datlt6h), cex = .5)
+points(fpr(datgt6h), sens(datgt6h), pch = 2, cex = 0.5) 
+legend("bottomright",  c("AUC CTA=<6 hrs=0.88", "AUC CTA> 6 hrs=0.84"), pch = 1:2, lty = 1:2)
+dev.off()
+
+#original Du
+summary(reitsma((DuSS)))
+#compare new Du
+datMetaDu<-subset(dat, dat$metaDu=="yes")
+datnotDu<-subset(dat, dat$metaDu=="no")
+srocMetaDu<-reitsma(datMetaDu)
+a1=round(AUC(srocMetaDu)$AUC,2)
+srocnotDu<-reitsma(datnotDu)
+a2=round(AUC(srocnotDu)$AUC,2)
+
+#high resolution
+tiff("Figure1Du.tiff", width = 6, height = 4, units = 'in', res = 300, compression = 'none')
+#plot(srocMetaDu, xlim = c(0,.5), ylim = c(.5,1), 
+ #    main = "Comparison of studies in Du Meta-analysis vs Later") 
+plot(srocMetaDu, xlim = c(0,.5), ylim = c(.5,1))
+lines(sroc(srocnotDu), lty = 2) 
+ROCellipse(srocnotDu, lty = 2, pch = 2, add = TRUE) 
+points(fpr(datMetaDu), sens(datMetaDu), cex = .5)
+points(fpr(datnotDu), sens(datnotDu), pch = 2, cex = 0.5) 
+legend("bottomright", c("AUC Du=0.89", "AUC Later=0.83"), pch = 1:2, lty = 1:2)
+dev.off()
+
+
+#legend("bottomright",c(paste0(("Du="),("Later="))),pch = 1:2,lty=1:2)
+
+```
+##bivariate bayesian model 
+```{r bayes}
+library(INLA)
+library(meta4diag)
+res <- meta4diag(data = datMetaDu) 
+SROC(res, crShow = T)
+
+#sensitivity
+forest(res, accuracy.type="sens", est.type="mean", p.cex="scaled", p.pch=15, p.col="black",
+    nameShow="right", dataShow="center", estShow="left", text.cex=1,
+    shade.col="gray", arrow.col="black", arrow.lty=1, arrow.lwd=1,
+    cut=TRUE, intervals=c(0.025,0.975),
+    main="Forest plot of Sensitivity", main.cex=1.5, axis.cex=1)
+
+#specificity
+forest(res, accuracy.type="spec", est.type="mean", p.cex="scaled", p.pch=15, p.col="black",
+    nameShow="right", dataShow="center", estShow="left", text.cex=1,
+    shade.col="gray", arrow.col="black", arrow.lty=1, arrow.lwd=1,
+    cut=TRUE, intervals=c(0.025,0.975),
+    main="Forest plot of Specificity", main.cex=1.5, axis.cex=1)
+
+#
+```
+#posLR
+forest(res, accuracy.type="lrpos",  est.type="mean", p.cex="scaled", p.pch=15, p.col="black",
+    nameShow="right", dataShow="center", estShow="left", text.cex=1,
+    shade.col="gray", arrow.col="black", arrow.lty=1, arrow.lwd=1,
+    cut=TRUE, intervals=c(0.025,0.975),
+    main="Forest plot of Positive LR", main.cex=1.5, axis.cex=1)
+
+
+##metaregression
+```{r metaregression }
+#setting= single or multicentre
+dat1<-subset(dat, dat$result_id==1 )
+(metass<-reitsma(dat1, formula = cbind(tsens,tfpr)~PubYear+Study.type+Setting+Quality.assessment)) 
+summary(metass)
+
+
+#setting= single or multicentre
+dat1<-subset(dat, dat$result_id==1 )
+(metassfull<-reitsma(dat1, formula = cbind(tsens,tfpr)~PubYear+clinical+Study.type+CTA6hrs+Setting+Quality.assessment)) 
+summary(metassfull)
+
+ssr<-as.data.frame(metassfull$residuals)
+ssr$Year<-as.Date(as.character(dat1$PubYear),"%Y")
+
+p<-ggplot(ssr, aes(x=ssr$Year,y=ssr$tsens))+geom_point()+scale_x_date()+geom_smooth(method="lm")+ggtitle("Relationship between transformed sensitivity and Publication Year")+labs(x="Year",y="transformed sensitivity")
+p
+#
+q<-ggplot(ssr, aes(x=ssr$Year,y=ssr$tfpr))+geom_point()+scale_x_date()+geom_smooth(method="lm")+labs(x="Year",y="transformed FPR")
+q
+
+#removing Q18, 25, 26
+(metass2<-reitsma(dat1, formula = cbind(tsens,tfpr)~PubYear+Setting+clinical+Study.type+CTA6hrs+Quality.assessment182526)) 
+summary(metass2)
+
+#meta-analysis of Du
+datDu<-subset(DuSS, DuSS$clinical==1 )
+(metassDu<-reitsma(datDu, formula = cbind(tsens,tfpr)~PubYear+Study.type)) 
+summary(metassDu)
+```
+
+##re-analysis metaanalysis of Du
+
+```{r reanalysis Du}
+#subset Du's data
+#DuSS<-subset(dat,dat$metaDu=="yes")
+
+#estimate prevalence of spot sign
+DuSS$xi=(DuSS$TP)
+DuSS$ni=(DuSS$TP+DuSS$FP+DuSS$FN+DuSS$TN)
+DuSS$pi <- with(DuSS, xi/ni)
+DuSS <- escalc(measure="PFT", xi=xi, ni=ni, data=DuSS, add=0) 
+res <- rma(yi, vi, method="REML", data=DuSS, slab=paste(Authors))
+result<-predict(res, transf=transf.ipft.hm, targs=list(ni=DuSS$ni))
+result$pred
+
+forest(res, transf=transf.ipft.hm, targs=list(ni=DuSS$ni), main="pooled prevalence of spot sign: re-aanlysis Du", xlim=c(-1,1.5),refline=result$pred,cex=.5, ilab=cbind(DuSS$PubYear,DuSS$xi, DuSS$ni),
+       ilab.xpos=c(-.55,-.25,-.05),digits=3)
+op <- par(cex=.5, font=2)
+text(-1.0,      29, "author ",     pos=4)
+text(c(-.55,-.275,-.025),   29, c("year", "growth", "subjects"))
+text(1.5,                  29, "prevalence [95% CI]", pos=2)
+
+
+##univariate pooled LR
+posLR.DSLDu <- madauni(DuSS, type = "posLR", method = "DSL")
+summary(posLR.DSLDu)
+negLR.DSLDu <- madauni(DuSS, type = "negLR", method = "DSL")
+#forest(negLR.DSLDu)
+summary(negLR.DSLDu)
+
+##bivariate pooled LR
+(ssd<-reitsma(DuSS))
+plot(ssd) #hierarchical SROC
+sumssd<-SummaryPts(ssd,n.iter = 10^3) #bivariate pooled LR
+summary(sumssd)
+
+#meta-regression
+#setting= single or multicentre
+datDu<-subset(DuSS, DuSS$clinical==1 )
+(metassDu<-reitsma(datDu, formula = cbind(tsens,tfpr)~PubYear+CTA6hrs+Study.type)) 
+summary(metassDu)
+
+
+```
+#analyse clinical outcome
+```{r clin}
+library(dplyr)
+clinSS<-subset(dat,dat$clinical==1)
+clinSS %>% select(
+  Authors,PubYear,Study.type,TPMORTSS,FPMORTSS,FNMORTSS,TNMORTSS,Quality.assessment
+  ) %>%
+  mutate (
+  TP=TPMORTSS,
+  FP=FPMORTSS,
+  FN=FNMORTSS,
+  TN=TNMORTSS
+  )
+
+##bivariate pooled LR
+(ssc<-reitsma(clinSS))
+plot(ssc) #hierarchical SROC
+sumssc<-SummaryPts(ssc,n.iter = 10^3) #bivariate pooled LR
+summary(sumssc)
+
+#metaregression
+#setting= single or multicentre
+dat2<-subset(clinSS, clinSS$clinical==1 )
+(metass2<-reitsma(dat2, formula = cbind(tsens,tfpr)~PubYear+Study.type)) 
+summary(metass2)
+```
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
