@@ -1,26 +1,22 @@
 # Metaanalysis
-This project contains several metaanalyses in neurological diseases: Spot sign, Vertigo, Hypoxic-Coma and Coma.
+This project contains several metaanalyses in neurological diseases: Spot sign, Vertigo, Hypoxic-Coma and Coma. The projects are developed within the subfolders and grouped according to the type of meta-analysis: Proportions and Diagnostic Test.
 
-## Aneurysm
-This metaanalysis is designed to examine the rate of rupture of aneurysm. This study is in development.
+## PRISMA
+The first part of any metaanalysis is the PRISMA statement. This flow diagram can be generated within R using the _PRISMAstatement_ library. The example provided uses data from the Spot Sign project.
 
-## Hypoxic-Coma
-This work has been published (Neurology 2010;74:572–580). The data is deposited in this repository. 
+## Proportion
 
-## Spot-Sign
-The spot sign on CTA is used to predict hematoma growth and clinical outcome. The current project uses mada package on CRAN. It uses a bivariate method to assess spot sign as diagnostic test. There's also illustration of metaregression. It also contains codes for assessing positive predictive value. The codes are available in .Rmd document. This work has been published in journal Stroke at https://www.ahajournals.org/doi/10.1161/STROKEAHA.118.024347
+### TIA
+The third metaanalysis examines the rate of stroke recurrence following management in rapid TIA clinic. A variety of different methods for calculating the 95% confidence interval of the binomial distribution. The mean of the binomial distribution is given by p and the variance by $\frac{p \times (1-p)}{n}$. The term $z$ is given    by $1-\frac{\alpha}{2}$ quantile of normal distribution. A standard way of calculating the confidence interval is the Wald method $p\pm z\times \sqrt{\frac{p \times(1-p)}{n}}$. The Freeman-Tukey double arcsine transformation tries to transform the data to a normal distribution. This approach is useful for handling when occurence of event is rare. The exact or Clopper-Pearson method is suggested as the most conservative of the methods for calculating confidence interval for proportion. It is based on cumulative properties of the binomial distribution. The Wilson method has similarities to the Wald method. It has an extra term $z^2/n$. There are many different methods for calculating the confidence interval for proportions. Investigators such as Agresti proposed that approximate methods are better than exact method. This project is also under development. 
 
-## Vertigo
-This metaanalysis is designed to look at HINT examination as bedside test for diagnosis of central or peripheral vertigo. In contrast to the above work, this one is in development. It will use the bivariate method for metaanalysis. The variation on the Spot-Sign project will be the use of Bayesian approach to metaanalysis.  
+The example below uses Freeman-Tukey double arcsine transformation from the metafor package. The exact method can be performed in a smilar way by by using the binomial.test function and passing the results to forest plot. The Wilson method can be added using similar approach.
 
-## TIA
-The third metaanalysis examines the rate of stroke recurrence following management in rapid TIA clinic. A variety of different methods for calculating the 95% confidence interval of the binomial distribution. The mean of the binomial distribution is given by p and the variance by $p \times (1-p)$. A standard way of calculating the confidence interval is the Wald method $p\pm z\times \sqrt{\frac{p \times(1-p)}{n}}$. The Freeman-Tukey double arcsine transformation tries to transform the data to a normal distribution. This approach is useful for handling when occurence of event is rare. The exact or Clopper-Pearson method is suggested as the most conservative of the methods for calculating confidence interval for proportion. The Wilson method has similarities to the Wald method. It has an extra term $z^2/n$. The many different methods for calculating the confidence interval This project is also under development. 
-
-The example below uses Freeman-Tukey double arcsine transformation from the metafor package. Later the exact method is added by the binomial.test function and passing the results to forest function.
+### Aneurysm
+This metaanalysis is designed to examine the rate of rupture of aneurysm. The choice of method depends on whether the rate of rupture is framing of the confidence interval. This study is in development.
 
 ```R
 library(metafor) #open software metafor
-#create data frame dat
+#create data frame dat for TIA data
 #xi is numerator
 #ni is denominator
 dat <- data.frame(model=c("melbourne","paris","oxford","stanford","ottawa","new zealand"),
@@ -40,7 +36,16 @@ text(c(-.55,-.2), 7.5, c("recurrence", " total subjects"))
 text(1.4,7.5, "frequency [95% CI]", pos=2)
 par(op)
 ```
+## Diagnostic test
 
+### Hypoxic-Coma
+This work has been published (Neurology 2010;74:572). The data is deposited in this repository. 
+
+### Spot-Sign
+The spot sign on CTA is used to predict hematoma growth and clinical outcome. The current project uses mada package on CRAN. It uses a bivariate method to assess spot sign as diagnostic test. There's also illustration of metaregression. It also contains codes for assessing positive predictive value. The codes are available in .Rmd document. This work has been published in journal Stroke at https://www.ahajournals.org/doi/10.1161/STROKEAHA.118.024347
+
+### Vertigo
+This metaanalysis is designed to look at HINT examination as bedside test for diagnosis of central or peripheral vertigo. In contrast to the above work, this one is in development. It will use the bivariate method for metaanalysis. The variation on the Spot-Sign project will be the use of Bayesian approach to metaanalysis. 
 
 The github repository was created in git bash
 
