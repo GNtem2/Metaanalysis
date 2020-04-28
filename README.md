@@ -46,7 +46,8 @@ This metaanalysis is designed to examine the rate of rupture of aneurysm. The ch
 
 ## Diagnostic test
 
-There are several approaches to evaluation of diagnostic studies. The current approach is the bivariate method of Reitmas.
+There are several approaches to evaluation of diagnostic studies. The current approach is the bivariate method of Reitmas. The QUADAS2 tool is available at 
+https://annals.org/aim/fullarticle/474994/quadas-2-revised-tool-quality-assessment-diagnostic-accuracy-studies
 
 ### Hypoxic-Coma
 
@@ -60,13 +61,15 @@ The spot sign on CTA is used to predict hematoma growth and clinical outcome. Th
 
 This metaanalysis is designed to look at HINT examination as bedside test for diagnosis of central or peripheral vertigo. In contrast to the above work, this one is in development. It will use the bivariate method for metaanalysis. The variation on the Spot-Sign project will be the use of Bayesian approach to metaanalysis. Data will be entered via RedCap. 
 
-The github repository was created in git bash
-
 ## Clinical-Trials
 
 ### Network-Metaanalysis
 
 This project is under development.
+
+## Git commands
+
+The github repository was created in git bash
 
 ```git
 git remote add origin https://github.com/GNtem2/Metaanalysis.git
