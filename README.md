@@ -43,6 +43,10 @@ This metaanalysis examines the rate of stroke recurrence following management in
 
 This metaanalysis is designed to examine the rate of rupture of aneurysm. The choice of method depends on whether the rate of rupture is framing of the confidence interval. This study is in development.
 
+### First Seizure
+
+This meta-analysis is designed to evaluate the risk of seizure recurrence following an unprovoked seizure. This study is in development.
+
 
 ## Diagnostic test
 
@@ -51,11 +55,15 @@ https://annals.org/aim/fullarticle/474994/quadas-2-revised-tool-quality-assessme
 
 ### Hypoxic-Coma
 
-This work has been published (Neurology 2010;74:572). The data is deposited in this repository. 
+This work has been published (Neurology 2010;74:572). The data is deposited in this repository. This study met the criteria for inclusion in the Database of Abstracts of Reviews of Effects (DARE): Quality-assessed Reviews https://www.ncbi.nlm.nih.gov/books/NBK285222/
+
+### ABCD2
+
+This work has been published (Neurology 2012;79: 971). This study met the criteria for inclusion in the Database of Abstracts of Reviews of Effects (DARE): Quality-assessed Reviews https://www.ncbi.nlm.nih.gov/books/NBK285222/
 
 ### Spot-Sign (Frequentist)
 
-The spot sign on CTA is used to predict hematoma growth and clinical outcome. The current project uses mada package on CRAN. It uses a bivariate method to assess spot sign as diagnostic test. There's also illustration of metaregression. It also contains codes for assessing positive predictive value. The codes are available in .Rmd document. Data was entered via Survey Monkey. This work has been published in journal Stroke at https://www.ahajournals.org/doi/10.1161/STROKEAHA.118.024347
+The spot sign on CTA is used to predict hematoma growth and clinical outcome. The current project uses mada package on CRAN. It uses a bivariate method to assess spot sign as diagnostic test. There's also illustration of metaregression. It also contains codes for assessing positive predictive value. The codes are available in .Rmd document. Data were entered via Survey Monkey. This work has been published in journal Stroke at https://www.ahajournals.org/doi/10.1161/STROKEAHA.118.024347
 
 ### Vertigo (Bayesian)
 
@@ -65,13 +73,14 @@ This metaanalysis is designed to look at HINT examination as bedside test for di
 
 ### Network-Metaanalysis
 
-This project is under development.
+This project is under development. There are several methods varying between frequentist (netmeta) to Bayesian methods (nmalINLA and gemtc). 
 
 ## Git commands
 
 The github repository was created in git bash
 
 ```git
+git init
 git remote add origin https://github.com/GNtem2/Metaanalysis.git
 git push -u origin master
 ```
