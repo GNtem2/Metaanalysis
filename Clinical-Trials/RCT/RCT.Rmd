@@ -1,0 +1,69 @@
+---
+title: "RCT"
+author: "gntem2"
+date: "02/06/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+The data is from Jama Cardiology on Associations of Omega-3 Fatty Acid Supplement Use With Cardiovascular Disease Risks Meta-analysis of 10 Trials Involving 77917 Individuals
+
+```{r metafor}
+library(tidyverse)
+library(metafor)
+Year=c(2010,2014,2010,2007,2010,2010,2013,2008,2012,1999)
+Trials=c("DOIT","AREDS-2","SU.FOL.OM3","JELIS","Alpha Omega","OMEGA","R&P","GISSI-HF","ORIGIN","GISSI-P")
+Treatment=c(29,213,216,262,332,534,733,783,1276,1552)
+Treatment.per=c(10.3,9.9,17.2,2.8,13.8,27.7,11.7,22.4,20.3,27.4)
+Control=c(35,208,211,324,331,541,745,831,1295,1550)
+Control.per=c(12.5,10.1,16.9,3.5,13.6,28.6, 11.9,23.9,20.7,27.3)
+rct<-data.frame(Year,Trials,Treatment,Treatment.per,Control,Control.per) %>%
+  mutate(Treatment.number=round(Treatment*100/Treatment.per,0),
+         Control.number=round(Control*100/Control.per,0)) %>%
+  rename(ai=Treatment,n1i=Treatment.number,ci=Control,
+         n2i=Control.number,study=Trials,year=Year)
+
+#peto's fixed effect method
+res <- rma.peto(ai=ai, n1i=n1i, ci=ci, n2i=n2i, data=rct)
+print(res, digits=2)
+
+result<-predict(res, transf=exp, digits=2)
+#forest plot
+forest(res, targs=list(study=rct$study), 
+main="RCT of Omega3 fatty acid for cardiovascular disease")
+# funnel plot 
+funnel(res, refline=0, level=c(90, 95, 99), shade=c("white", "gray", "darkgray"))
+
+```
+
+```{r random effect}
+dat <- escalc(measure = "OR",ai=ai, n1i=n1i, ci=ci, n2i=n2i,data=rct)
+res.DL<-rma(yi,vi, method = "DL",data=dat)
+forest(res.DL,main="RCT of Omega3 fatty acid for cardiovascular disease")
+```
+```{r baujat}
+# adjust margins so the space is better used
+par(mar=c(5,4,2,2))
+# create Baujat plot to explore source of heterogeneity
+baujat(res.DL, xlim=c(0,20), ylim=c(0,0.2))
+```
+```{r gosh}
+### fit FE model to all possible subsets
+sav <- gosh(res.DL)
+ 
+### create GOSH plot
+### red points for subsets that include and blue points
+### for subsets that exclude study 16 (the ISIS-4 trial)
+plot(sav, out=dim(rct)[1], breaks=100)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
