@@ -74,6 +74,10 @@ This metaanalysis is designed to look at HINT examination as bedside test for di
 ### RCT
 Revman is an excellent tool for performing meta-analysis of trials. Here we will use metafor package, see rct.Rmd. The following methods are demonstrated: fixed effect and random effect analyses, forest plot, funnel plot (for exploring publication bias), Baujat plot (for exploring source of heterogeneity) and GOSH plot (for exploring study heterogeneity using output of fixed effect model for all possible subsets)
 
+[!here](./Clinical-Trials/RCT/funnelplot.png)
+
+[!here](./Clinical-Trials/RCT/baujat.png)
+
 ### Network-Metaanalysis
 
 This project is under development. There are several methods varying between frequentist (netmeta) to Bayesian methods (nmalINLA and gemtc). 
