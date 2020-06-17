@@ -98,7 +98,7 @@ rmeta_conf <-
 tabletext<-cbind(c("","Trials","wide","narrow",NA,"Summary"),
                  c("Events","(Drugs)","1052","4878",NA,NA),
                  c("Events","(Control)","1109","4962",NA,NA),     
-                 c("","OR","0.934","0.0974",NA,"0.965")
+                 c("","OR","0.934","0.974",NA,"0.965")
 )
 
 #use forestplot
