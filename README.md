@@ -83,6 +83,34 @@ Baujat plot
 GOSH plot
 ![here](./Clinical-Trials/RCT/gosh.png)
 
+Metafor has routines for performing subplots using the subset function. Another way is to use the forestplot library in the example below
+```r
+rmeta_conf <- 
+  structure(list(
+    mean  = c(NA, NA, exp(-0.0676), exp(-0.0266),  NA, exp(-0.0352)), 
+    lower = c(NA, NA, exp(-0.1873), exp(-0.0715),  NA, exp(-0.0753)),
+    upper = c(NA, NA, exp(0.0520), exp(0.0183),  NA, exp(0.0049))),
+    .Names = c("mean", "lower", "upper"), 
+    row.names = c(NA, -6L), 
+    class = "data.frame")
+
+#table data
+tabletext<-cbind(c("","Trials","wide","narrow","NA","Summary"),
+                 c("Events","(Drugs)","1052","4878","NA","NA"),
+                 c("Events","(Control)","1109","4962","NA","NA"),     
+                 c("","OR","-.0676","-.0266","NA","-0.0352")
+)
+
+#use forestplot
+library(forestplot)
+forestplot(tabletext, 
+           rmeta_conf,new_page = TRUE,
+           is.summary=c(TRUE,TRUE,rep(FALSE,8),TRUE),
+           clip=c(0.1,2.5), 
+           xlog=TRUE, 
+           col=fpColors(box="royalblue",line="darkblue", summary="royalblue"))
+```
+
 ### Network-Metaanalysis
 
 This project is under development. There are several methods varying between frequentist (netmeta) to Bayesian methods (nmalINLA and gemtc). 
