@@ -4,7 +4,7 @@ This project contains several metaanalyses in neurological diseases: Spot sign, 
 
 ## PRISMA
 
-The first part of any metaanalysis is the PRISMA statement. This flow diagram can be generated within R using the _PRISMAstatement_ library. The example provided uses data from the Spot Sign project.
+The first part of any metaanalysis is the PRISMA statement. This flow diagram can be generated within R using the _PRISMAstatement_ library. The example provided uses data from the Spot Sign project. An alternative approach is to use the _DiagrammeR_ library.
 
 ## Proportion
 
