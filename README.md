@@ -51,7 +51,30 @@ This meta-analysis is designed to evaluate the risk of seizure recurrence follow
 ## Diagnostic test
 
 There are several approaches to evaluation of diagnostic studies. The current approach is the bivariate method of Reitmas. The QUADAS2 tool is available at 
-https://annals.org/aim/fullarticle/474994/quadas-2-revised-tool-quality-assessment-diagnostic-accuracy-studies
+https://annals.org/aim/fullarticle/474994/quadas-2-revised-tool-quality-assessment-diagnostic-accuracy-studies. Example of 2 x 2 table is provided here.
+
+```r
+            Disease Positive     Disease Negative
+####################################################
+# Test    #                 #                      #
+# Positive#         TP      #     FP               #  
+#         #                 #                      #
+####################################################
+# Test    #                 #                      #
+# Negative#         FN      #     TN               #
+#         #                 #                      # 
+####################################################
+```
+Sensitivity is the true positive rate
+Sensitiviy=TP/(TP+FN)
+
+Specificity is the true negatve rate
+Specificity=TN/(TN+FP)
+
+Likelihood ration
+Positive likelihood ratio= Sensitivity/(1-Specificity)
+Negative likelihood ratio=(1-Sensitivity)/Specificity
+
 
 ### Hypoxic-Coma
 
