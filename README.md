@@ -51,17 +51,17 @@ This meta-analysis is designed to evaluate the risk of seizure recurrence follow
 ## Diagnostic test
 
 There are several approaches to evaluation of diagnostic studies. The current approach is the bivariate method of Reitmas. The QUADAS2 tool is available at 
-https://annals.org/aim/fullarticle/474994/quadas-2-revised-tool-quality-assessment-diagnostic-accuracy-studies. Example of 2 x 2 table is provided here.
+https://annals.org/aim/fullarticle/474994/quadas-2-revised-tool-quality-assessment-diagnostic-accuracy-studies. Example of 2 x 2 table is provided here. As an exercise, consider a paper about a diagnostic test for peripheral vertigo reporting 100% sensitivity and 94.4% specificity. There are 114 patients, 72 patients without stroke have vertigo and positive test findings. Among patients with stroke 7 of 42 have positive test findings.
 
 ```r
             Disease Positive     Disease Negative
 ####################################################
 # Test    #                 #                      #
-# Positive#         TP      #     FP               #  
+# Positive# True Positive   # False Positive       #  
 #         #                 #                      #
 ####################################################
 # Test    #                 #                      #
-# Negative#         FN      #     TN               #
+# Negative# False Negative  # True Negative        #
 #         #                 #                      # 
 ####################################################
 ```
@@ -71,7 +71,7 @@ Sensitiviy=TP/(TP+FN)
 Specificity is the true negatve rate
 Specificity=TN/(TN+FP)
 
-Likelihood ration
+Likelihood ratio
 Positive likelihood ratio= Sensitivity/(1-Specificity)
 Negative likelihood ratio=(1-Sensitivity)/Specificity
 
@@ -90,7 +90,9 @@ The spot sign on CTA is used to predict hematoma growth and clinical outcome. Th
 
 ### Vertigo (Bayesian)
 
-This metaanalysis is designed to look at HINT examination as bedside test for diagnosis of central or peripheral vertigo. In contrast to the above work, this one is in development. It will use the bivariate method for metaanalysis. The variation on the Spot-Sign project will be the use of Bayesian approach to metaanalysis. Data will be entered via RedCap. 
+This metaanalysis is designed to look at HINT examination as bedside test for diagnosis of peripheral vertigo. In contrast to the above work, this one is in development. It will use the bivariate method for metaanalysis. The variation on the Spot-Sign project will be the use of Bayesian approach to metaanalysis. Data will be entered via RedCap. 
+
+The exercise give above illustrates an issue with reports of diagnostic accuracy with HINT examination. Some papers report with respect to vertigo (Frontiers in Neurology 2016 August) or stroke (ACADEMIC EMERGENCY MEDICINE 2013; 20:987–996). 
 
 ## Clinical-Trials
 
