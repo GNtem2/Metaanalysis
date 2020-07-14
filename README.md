@@ -54,21 +54,23 @@ There are several approaches to evaluation of diagnostic studies. The current ap
 https://annals.org/aim/fullarticle/474994/quadas-2-revised-tool-quality-assessment-diagnostic-accuracy-studies. Example of 2 x 2 table is provided here. As an exercise, consider a paper about a diagnostic test for peripheral vertigo reporting 100% sensitivity and 94.4% specificity. There are 114 patients, 72 patients without stroke have vertigo and positive test findings. Among patients with stroke 7 of 42 have positive test findings.
 
 ```r
+              Peripheral Vertigo
             Disease Positive     Disease Negative
 ####################################################
-# Test    #                 #                      #
+# HIT Test#                 #                      #
 # Positive# True Positive   # False Positive       #  
-#         #                 #                      #
+#         #     72          #       7              #
 ####################################################
-# Test    #                 #                      #
+# HIT Test#                 #                      #
 # Negative# False Negative  # True Negative        #
-#         #                 #                      # 
+#         #     0           #       35             # 
 ####################################################
-```
-Sensitivity is the true positive rate
-Sensitiviy=TP/(TP+FN)
 
-Specificity is the true negatve rate
+```
+Sensitivity is the true positive rate and is 100% for the above data.
+Sensitiviy=TP/(TP+FN). 
+
+Specificity is the true negatve rate and is 83% for the above data.
 Specificity=TN/(TN+FP)
 
 Likelihood ratio
