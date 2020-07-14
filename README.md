@@ -66,13 +66,30 @@ https://annals.org/aim/fullarticle/474994/quadas-2-revised-tool-quality-assessme
 #         #     0           #       35             # 
 ####################################################
 
+# Peripheral Vertigo
+#Sensitiviy=TP/(TP+FN)=100%
+#Specificity=TN/(TN+FP)=83%
+
+####################################################
+#If the objective is to diagnose cerebellar stroke then the table should be set up like this
+
+              Cerebellar Stroke
+            Disease Positive     Disease Negative
+####################################################
+# HIT Test#                 #                      #
+# Positive# True Positive   # False Positive       #  
+#         #     7          #       72              #
+####################################################
+# HIT Test#                 #                      #
+# Negative# False Negative  # True Negative        #
+#         #     35           #      0              # 
+####################################################
+
+#Stroke
+#Sensitiviy=TP/(TP+FN)=17%
+#Specificity=TN/(TN+FP)=0%
+
 ```
-Sensitivity is the true positive rate and is 100% for the above data.
-Sensitiviy=TP/(TP+FN). 
-
-Specificity is the true negatve rate and is 83% for the above data.
-Specificity=TN/(TN+FP)
-
 Likelihood ratio
 Positive likelihood ratio= Sensitivity/(1-Specificity)
 Negative likelihood ratio=(1-Sensitivity)/Specificity
