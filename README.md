@@ -49,9 +49,14 @@ This meta-analysis is designed to evaluate the risk of seizure recurrence follow
 
 
 ## Diagnostic test
+The sensitivity of a diagnostic test is the true positive rate and the specificity is the true negative rate. The area under the receiver operating characteristics (ROC) curve or AUC is a measure of the accuracy of the test.An AUC of 0.5 is classified as no better than by chance; 0.8 to 0.89 provides good (excellent) discrimination, and 0.9 to 1.0 provides outstanding discrimination.51 The standard approach adopted in interpreting AUC may not hold true in the presence of heterogeneity.Positive likelihood ratio (PLR) is the ratio of sensitivity to false positive rate (FPR); the negative (NLR) likelihood ratio is the ratio of 1-sensitivity to specificity. A PLR indicates the likelihood that a positive spot sign (test) would be expected in a patient with ICH (target disorder) compared with the likelihood that the same result would be expected in a patient without ICH. Using the recommendation by Jaeschke et al, a high PLR (>5) and low NLR (<0.2) indicate that the test results would make moderate changes in the likelihood of hematoma growth from baseline risk. PLRs of >10 and NLRs of <0.1 would confer very large changes from baseline risk.
+ 
+There are several approaches to evaluation of diagnostic studies. The current approach is the bivariate method of Reitmas. 
 
-There are several approaches to evaluation of diagnostic studies. The current approach is the bivariate method of Reitmas. The QUADAS2 tool is available at 
-https://annals.org/aim/fullarticle/474994/quadas-2-revised-tool-quality-assessment-diagnostic-accuracy-studies. Example of 2 x 2 table is provided here. As an exercise, consider a paper about a diagnostic test for peripheral vertigo reporting 100% sensitivity and 94.4% specificity. There are 114 patients, 72 patients without stroke have vertigo and positive test findings. Among patients with stroke 7 of 42 have positive test findings.
+All studies require evaluation of the quality of the individual studies. This can be done with the QUADAS2 tool, available at 
+https://annals.org/aim/fullarticle/474994/quadas-2-revised-tool-quality-assessment-diagnostic-accuracy-studies. 
+
+Example of 2 x 2 table is provided here. As an exercise, consider a paper about a diagnostic test for peripheral vertigo reporting 100% sensitivity and 94.4% specificity. There are 114 patients, 72 patients without stroke have vertigo and positive test findings. Among patients with stroke 7 of 42 have positive test findings.
 
 ```r
               Peripheral Vertigo
