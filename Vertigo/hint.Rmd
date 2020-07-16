@@ -22,8 +22,18 @@ This is a practice run. The data needs to have columns TP, FP, FN, TN. The data 
 library(tidyverse)
 library(mada)
 
+#old data
+#dat<-readxl::read_xlsx("Vertigo_data_SO.xlsx")
 
-dat<-readxl::read_xlsx("Vertigo_data_SO.xlsx")
+#new data
+#subset data for analysis
+dat<-read.csv("vertigo160720.csv") %>% 
+  select (Authors, PubYear, TP, FP, FN, TN) %>% 
+  #remove row 4 with no data
+  slice(-4)
+
+
+
 
 #positive likelihood
 posLR.DSL <- madauni(dat, type = "posLR", method = "DSL")

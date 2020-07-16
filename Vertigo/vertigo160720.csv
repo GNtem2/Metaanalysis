@@ -1,0 +1,12 @@
+Authors,PubYear,StudyYear,,,,hospital,Country,StudyType,total,Quality assessment,Setting,TP,FP,FN,TN,MeanAge,male,id,result_id,study_id,clinical,clinical,HE12
+Batuecase-Caletrio,2014,,,,,Spain,Spain,Prospective,91,,ED,3,7,80,1,55.8,,,,,,,
+Carmona,2016,2012,,,,Argentina,USA,Retrospective,114,,ED,72,7,0,35,50.6,42.10526316,,,,,,
+Chen,2011,,,,,Melbourne,Australia,Prospective,24,,ED,14,2,0,8,64,63,,,,,,
+Choi,2014,2012,,,,Pusan National University Yangsan Hospital,South Korea,Prospective,132,,ED,,,,,68.3,73,,,,,,
+Choi,2017,2014,,,,Pusan National University Yangsan Hospital,South Korea,Prospective,86,,ED,15,0,5,3,59,50,,,,,,
+Guler,2017,2016,,,,Turkey,Turkey,Prospective cross sectional,40,,ED,20,0,4,16,49,65,,,,,,
+Cnyrim,2007,2004,,,,Baltimore,USA,Retrospective,83,,ED,37,17,3,26,53.5,47,,,,,,
+Kattah,2009,2008,,,,Baltimore,USA,"Prospective, cross sectional",101,,ED/ward/external,24,3,4,47,62,65,,,,,,
+Kerber,2015,2013,,,,Michigan,USA,Prospective,272,,ED,100,20,78,4,58.35,69.85294118,,,,,,
+McDowell,2016,2011,,,,Montreal,Canada,Retrospective,642,,ED,6,0,7,6,63,39.7,,,,,,
+Newman-Toker,2013,2012,,,,Ilinois,USA,Prospective,190,,ED,67,11,10,102,60.5,60.5,,,,,,
