@@ -53,6 +53,8 @@ The sensitivity of a diagnostic test is the true positive rate and the specifici
  
 There are several approaches to evaluation of diagnostic studies. The current approach is the bivariate method of Reitmas. 
 
+It is important to look at the inconsistency I2 index. This is the sum of the squared deviations from the overall effect and weighted by the study size. Value <25% is classified as low and greater than 75% as high heterogeneity, It is recommended that meta-regression be used in the presence of high heterogeneity. There are several plots for exploring this issue. see below. 
+
 All studies require evaluation of the quality of the individual studies. This can be done with the QUADAS2 tool, available at 
 https://annals.org/aim/fullarticle/474994/quadas-2-revised-tool-quality-assessment-diagnostic-accuracy-studies. 
 
