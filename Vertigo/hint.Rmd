@@ -29,11 +29,8 @@ library(mada)
 #subset data for analysis
 dat<-read.csv("vertigo160720.csv") %>% 
   select (Authors, PubYear, TP, FP, FN, TN) %>% 
-  #remove row 4 with no data
-  slice(-4)
-
-
-
+  #remove row by positions 
+  slice(-c(1,4,5))
 
 #positive likelihood
 posLR.DSL <- madauni(dat, type = "posLR", method = "DSL")
@@ -54,8 +51,11 @@ AUC(reitsma(data = dat))
 sumss<-SummaryPts(ss,n.iter = 10^3) #bivariate pooled LR
 summary(sumss)
 
-plot(ss, xlim = c(0,.5), ylim = c(.5,1)) 
- #    main = "Comparison of Retrospective and Prospective studies") 
+plot(ss, xlim = c(0,.5), ylim = c(.5,1),main = "AUC of Head Impulse Test for Peripheral Vertigo")
+points(fpr(dat), sens(dat), cex = .5)
+legend("bottomright",c("AUC =0.87"),pch = 1:2, lty = 1:2)
+
+
 
 ```
 
