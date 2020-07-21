@@ -2,6 +2,10 @@
 
 This project contains several metaanalyses in neurological diseases: Spot sign, Vertigo, Hypoxic-Coma and Coma. The projects are developed within the subfolders and grouped according to the type of meta-analysis: Proportions and Diagnostic Test. The work horse for meta-analysis is metafor (http://www.metafor-project.org/doku.php/analyses)
 
+## Tidy data
+
+Attention to collection of data is important as it shows the way for performing analysis. In general each row represents a variable (ie study ID) and each column represents an attribute of that variables (ie year of publication, TP, FP, FN, TN, duplicate study (yes or no) etc). Sometimes there is a temptation to embed 2 types of attributes into a column. An example would be "no duplicate keep". This column should ideally be splitted into duplicate (yes or no) and another column retain (yes or no). A sensible approach is to conceptualise how the data can be analysed in R. R provides a number of packages for subsetting or filtering of studies. As such there is no need to create multiple copies of the same data with subsequent files having the files studies removed. A better approach is to keep adding data into subsequent rows and use a column retain (yes or no) to identify the studies for analysis. In this case, you can use dplyr::filter (dat, retain=="yes") to subset the studies. This is sensible as later you may deemed that these studies should be kept in the analysis and so there is no need to do a hard remove in the excel file. An example of a tidy dataset is provided in 150718.csv under Spot-Sign folder.
+
 ## PRISMA
 
 The first part of any metaanalysis is the PRISMA statement. This flow diagram can be generated within R using the _PRISMAstatement_ library. The example provided uses data from the Spot Sign project. An alternative approach is to use the _DiagrammeR_ library.
@@ -49,7 +53,12 @@ This meta-analysis is designed to evaluate the risk of seizure recurrence follow
 
 
 ## Diagnostic test
-The sensitivity of a diagnostic test is the true positive rate and the specificity is the true negative rate. The area under the receiver operating characteristics (ROC) curve or AUC is a measure of the accuracy of the test.An AUC of 0.5 is classified as no better than by chance; 0.8 to 0.89 provides good (excellent) discrimination, and 0.9 to 1.0 provides outstanding discrimination.51 The standard approach adopted in interpreting AUC may not hold true in the presence of heterogeneity.Positive likelihood ratio (PLR) is the ratio of sensitivity to false positive rate (FPR); the negative (NLR) likelihood ratio is the ratio of 1-sensitivity to specificity. A PLR indicates the likelihood that a positive spot sign (test) would be expected in a patient with ICH (target disorder) compared with the likelihood that the same result would be expected in a patient without ICH. Using the recommendation by Jaeschke et al, a high PLR (>5) and low NLR (<0.2) indicate that the test results would make moderate changes in the likelihood of hematoma growth from baseline risk. PLRs of >10 and NLRs of <0.1 would confer very large changes from baseline risk.
+The sensitivity of a diagnostic test is the true positive rate and the specificity is the true negative rate. 
+
+The area under the receiver operating characteristics (ROC) curve or AUC is a measure of the accuracy of the test.An AUC of 0.5 is classified as no better than by chance; 0.8 to 0.89 provides good (excellent) discrimination, and 0.9 to 1.0 provides outstanding discrimination.51 The standard approach adopted in interpreting AUC may not hold true in the presence of heterogeneity.
+
+Likelihood ratio
+Positive likelihood ratio (PLR) is the ratio of sensitivity to false positive rate (FPR); the negative (NLR) likelihood ratio is the ratio of 1-sensitivity to specificity. A PLR indicates the likelihood that a positive spot sign (test) would be expected in a patient with ICH (target disorder) compared with the likelihood that the same result would be expected in a patient without ICH. Using the recommendation by Jaeschke et al, a high PLR (>5) and low NLR (<0.2) indicate that the test results would make moderate changes in the likelihood of hematoma growth from baseline risk. PLRs of >10 and NLRs of <0.1 would confer very large changes from baseline risk.
  
 There are several approaches to evaluation of diagnostic studies. The current approach is the bivariate method of Reitmas. 
 
@@ -97,26 +106,28 @@ Example of 2 x 2 table is provided here. As an exercise, consider a paper about 
 #Specificity=TN/(TN+FP)=0%
 
 ```
-Likelihood ratio
-Positive likelihood ratio= Sensitivity/(1-Specificity)
-Negative likelihood ratio=(1-Sensitivity)/Specificity
+
 
 
 ### Hypoxic-Coma
 
-This work has been published (Neurology 2010;74:572). The data is deposited in this repository. This study met the criteria for inclusion in the Database of Abstracts of Reviews of Effects (DARE): Quality-assessed Reviews https://www.ncbi.nlm.nih.gov/books/NBK285222/
+This evaluation of tools for prognosticating hypoxic coma has been published (Neurology 2010;74:572). It assessed absent SEP, EEG (Burst suppression and isoelectric patterns), GCS motor score and asbent pupillary responses. The data (25 studies) from that paper is deposited in this repository. This study met the criteria for inclusion in the Database of Abstracts of Reviews of Effects (DARE): Quality-assessed Reviews https://www.ncbi.nlm.nih.gov/books/NBK285222/. It has been 10 years since that meta-analysis and an update is needed given the use of hypothermia in the management of hypoxic coma and the use of other tests including MRI and CT scans, serum neuron-specific enolase.
 
 ### ABCD2
 
-This work has been published (Neurology 2012;79: 971). This study met the criteria for inclusion in the Database of Abstracts of Reviews of Effects (DARE): Quality-assessed Reviews https://www.ncbi.nlm.nih.gov/books/NBK285222/
+This work on the use of ABCD2 for prognostication of TIA outcome has been published (Neurology 2012;79: 971). Importantly, ABCD2 was not a good tool positive likelihood ratio (PLR) 1.43 (1.33–1.54), negative likelihood ratio (NLR) 0.40 (0.33–0.50), and area under the curve (AUC) 0.70 (0.62–0.78). This study met the criteria for inclusion in the Database of Abstracts of Reviews of Effects (DARE): Quality-assessed Reviews https://www.ncbi.nlm.nih.gov/books/NBK285222/
 
 ### Spot-Sign (Frequentist)
 
-The spot sign on CTA is used to predict hematoma growth and clinical outcome. The current project uses mada package on CRAN. It uses a bivariate method to assess spot sign as diagnostic test. There's also illustration of metaregression. It also contains codes for assessing positive predictive value. The codes are available in .Rmd document. Data were entered via Survey Monkey. This work has been published in journal Stroke at https://www.ahajournals.org/doi/10.1161/STROKEAHA.118.024347
+The spot sign on CTA has been used to predict hematoma growth and clinical outcome. It was considered as a surrogate for identifying intracerebral hemorrhage for durg trials. Prior approaches to metaanalysis of diagnostic studies use univariate method of Moses-Shapiro-Littenberg and which takes a reductionistic approach (combines information from the sensitivity and specificity). The current recommendation for metaanalysis of diagnostic studies is the bivariate method of Reitmas which preserves the dual nature of the data (sensitivity and specificity) in the treatment of covariates in meta-regression. Similar to the univariate method, the
+bivariate method employs a random effect to take into account the within study correlation. Additionally, the bivariate method also accounts for the
+between-study correlation in sensitivity and specificity. The current project uses mada package on CRAN. It uses a bivariate method from mada package to assess spot sign as diagnostic test. There's also illustration of metaregression. It also contains codes for assessing positive predictive value. The codes are available in .Rmd document. Data were entered via Survey Monkey. This work has been published in journal Stroke at https://www.ahajournals.org/doi/10.1161/STROKEAHA.118.024347
 
 ### Vertigo (Bayesian)
 
-This metaanalysis is designed to look at HINT examination as bedside test for diagnosis of peripheral vertigo. In contrast to the above work, this one is in development. It will use the bivariate method for metaanalysis. The variation on the Spot-Sign project will be the use of Bayesian approach to metaanalysis. Data will be entered via RedCap. 
+This metaanalysis is designed to look at HINT examination as bedside test for diagnosis of peripheral vertigo. In contrast to the above work, this one is in development. 
+
+It will use the bivariate method from meta4diag package for metaanalysis. The variation on the Spot-Sign project will be the use of Bayesian approach to metaanalysis. The choice of Bayesian method is due to the small number of available studies (n<20), spare data, and which can pose a problem with convergence when performing numeric approach to maximum likelihood for bivariate model. Data will be entered via RedCap. 
 
 The exercise give above illustrates an issue with reports of diagnostic accuracy with HINT examination. Some papers report with respect to vertigo (Frontiers in Neurology 2016 August) or stroke (ACADEMIC EMERGENCY MEDICINE 2013; 20:987–996). 
 
@@ -165,6 +176,7 @@ forestplot(tabletext,
 ### Network-Metaanalysis
 
 This project is under development. There are several methods varying between frequentist (netmeta) to Bayesian methods (nmalINLA and gemtc). 
+
 
 ## Git commands
 

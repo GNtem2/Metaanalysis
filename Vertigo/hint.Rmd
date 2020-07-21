@@ -47,16 +47,62 @@ forest(negLR.DSL)
 
 (ss<-reitsma(dat))
 summary(ss)
-AUC(reitsma(data = dat))
+srocdat<-AUC(reitsma(data = dat))
 sumss<-SummaryPts(ss,n.iter = 10^3) #bivariate pooled LR
 summary(sumss)
 
 plot(ss, xlim = c(0,.5), ylim = c(.5,1),main = "AUC of Head Impulse Test for Peripheral Vertigo")
 points(fpr(dat), sens(dat), cex = .5)
-legend("bottomright",c("AUC =0.87"),pch = 1:2, lty = 1:2)
-
-
+legend("bottomright", "AUC = 0.88",pch = 1:2, lty = 1:2)
 
 ```
 
+```{r pubyear}
+
+
+ssr<-as.data.frame(ss$residuals)
+ssr$Year<-as.Date(as.character(dat$PubYear),"%Y")
+
+#sensitivity
+p<-ggplot(ssr, aes(x=ssr$Year,y=ssr$tsens))+geom_point()+scale_x_date()+geom_smooth(method="lm")+ggtitle("Relationship between transformed sensitivity and Publication Year")+labs(x="Year",y="transformed sensitivity")
+p
+
+#specificity
+fitss<-lm(ssr$tfpr~ssr$Year,data=ssr)
+q<-ggplot(ssr, aes(x=ssr$Year,y=ssr$tfpr))+geom_point()+scale_x_date()+geom_smooth(method="lm")+ggtitle("Relationship between transformed specificity and Publication Year")
+  
+q
+```
+```{r bayes}
+library(INLA)
+library(meta4diag)
+res <- meta4diag(data = dat) 
+SROC(res, crShow = T)
+#sensitivity
+forest(res, accuracy.type="sens", est.type="mean", p.cex="scaled", p.pch=15, p.col="black",
+    nameShow="right", dataShow="center", estShow="left", text.cex=1,
+    shade.col="gray", arrow.col="black", arrow.lty=1, arrow.lwd=1,
+    cut=TRUE, intervals=c(0.025,0.975),
+    main="Forest plot of Sensitivity", main.cex=1.5, axis.cex=1)
+#specificity
+forest(res, accuracy.type="spec", est.type="mean", p.cex="scaled", p.pch=15, p.col="black",
+    nameShow="right", dataShow="center", estShow="left", text.cex=1,
+    shade.col="gray", arrow.col="black", arrow.lty=1, arrow.lwd=1,
+    cut=TRUE, intervals=c(0.025,0.975),
+    main="Forest plot of Specificity", main.cex=1.5, axis.cex=1)
+
+resLR <- meta4diag(data = dat,model.type = 2, nsample=1000) 
+forest(resLR, accuracy.type="LRpos", est.type="mean", p.cex="scaled", p.pch=15, p.col="black",
+    nameShow="right", dataShow="center", estShow="left", text.cex=1,
+    shade.col="gray", arrow.col="black", arrow.lty=1, arrow.lwd=1,
+    cut=TRUE, intervals=c(0.025,0.975),
+    main="Forest plot of Positive LR", main.cex=1.5, axis.cex=1)
+
+forest(resLR, accuracy.type="LRneg", est.type="mean", p.cex="scaled", p.pch=15, p.col="black",
+    nameShow="right", dataShow="center", estShow="left", text.cex=1,
+    shade.col="gray", arrow.col="black", arrow.lty=1, arrow.lwd=1,
+    cut=TRUE, intervals=c(0.025,0.975),
+    main="Forest plot of Negative LR", main.cex=1.5, axis.cex=1)
+
+```
 Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
