@@ -41,7 +41,7 @@ par(op)
 
 ### TIA
 
-This metaanalysis examines the rate of stroke recurrence following management in rapid TIA clinic. 
+This metaanalysis examines the rate of stroke recurrence following management in rapid TIA clinic. This study is in development.
 
 ### Aneurysm
 
@@ -55,15 +55,16 @@ This meta-analysis is designed to evaluate the risk of seizure recurrence follow
 ## Diagnostic test
 The sensitivity of a diagnostic test is the true positive rate and the specificity is the true negative rate. 
 
+AUC
 The area under the receiver operating characteristics (ROC) curve or AUC is a measure of the accuracy of the test.An AUC of 0.5 is classified as no better than by chance; 0.8 to 0.89 provides good (excellent) discrimination, and 0.9 to 1.0 provides outstanding discrimination.51 The standard approach adopted in interpreting AUC may not hold true in the presence of heterogeneity.
 
 Likelihood ratio
 Positive likelihood ratio (PLR) is the ratio of sensitivity to false positive rate (FPR); the negative (NLR) likelihood ratio is the ratio of 1-sensitivity to specificity. A PLR indicates the likelihood that a positive spot sign (test) would be expected in a patient with ICH (target disorder) compared with the likelihood that the same result would be expected in a patient without ICH. Using the recommendation by Jaeschke et al, a high PLR (>5) and low NLR (<0.2) indicate that the test results would make moderate changes in the likelihood of hematoma growth from baseline risk. PLRs of >10 and NLRs of <0.1 would confer very large changes from baseline risk.
  
-There are several approaches to evaluation of diagnostic studies. The current approach is the bivariate method of Reitmas. 
+Heterogeneity
+It is important to look at the inconsistency I2 index. This is the sum of the squared deviations from the overall effect and weighted by the study size. Value <25% is classified as low and greater than 75% as high heterogeneity, It is recommended that meta-regression be used in the presence of high heterogeneity. There are several plots (funnel, baujat, GOSH) for exploring this issue. see below. 
 
-It is important to look at the inconsistency I2 index. This is the sum of the squared deviations from the overall effect and weighted by the study size. Value <25% is classified as low and greater than 75% as high heterogeneity, It is recommended that meta-regression be used in the presence of high heterogeneity. There are several plots for exploring this issue. see below. 
-
+Quality
 All studies require evaluation of the quality of the individual studies. This can be done with the QUADAS2 tool, available at 
 https://annals.org/aim/fullarticle/474994/quadas-2-revised-tool-quality-assessment-diagnostic-accuracy-studies. 
 
@@ -107,8 +108,6 @@ Example of 2 x 2 table is provided here. As an exercise, consider a paper about 
 
 ```
 
-
-
 ### Hypoxic-Coma
 
 This evaluation of tools for prognosticating hypoxic coma has been published (Neurology 2010;74:572). It assessed absent SEP, EEG (Burst suppression and isoelectric patterns), GCS motor score and asbent pupillary responses. The data (25 studies) from that paper is deposited in this repository. This study met the criteria for inclusion in the Database of Abstracts of Reviews of Effects (DARE): Quality-assessed Reviews https://www.ncbi.nlm.nih.gov/books/NBK285222/. It has been 10 years since that meta-analysis and an update is needed given the use of hypothermia in the management of hypoxic coma and the use of other tests including MRI and CT scans, serum neuron-specific enolase.
@@ -121,7 +120,7 @@ This work on the use of ABCD2 for prognostication of TIA outcome has been publis
 
 The spot sign on CTA has been used to predict hematoma growth and clinical outcome. It was considered as a surrogate for identifying intracerebral hemorrhage for durg trials. Prior approaches to metaanalysis of diagnostic studies use univariate method of Moses-Shapiro-Littenberg and which takes a reductionistic approach (combines information from the sensitivity and specificity). The current recommendation for metaanalysis of diagnostic studies is the bivariate method of Reitmas which preserves the dual nature of the data (sensitivity and specificity) in the treatment of covariates in meta-regression. Similar to the univariate method, the
 bivariate method employs a random effect to take into account the within study correlation. Additionally, the bivariate method also accounts for the
-between-study correlation in sensitivity and specificity. The current project uses mada package on CRAN. It uses a bivariate method from mada package to assess spot sign as diagnostic test. There's also illustration of metaregression. It also contains codes for assessing positive predictive value. The codes are available in .Rmd document. Data were entered via Survey Monkey. This work has been published in journal Stroke at https://www.ahajournals.org/doi/10.1161/STROKEAHA.118.024347
+between-study correlation in sensitivity and specificity. The current project uses mada package on CRAN. It uses a bivariate method from mada package to assess spot sign as diagnostic test. There's also illustration of metaregression. It also contains codes for assessing positive predictive value. The codes are available in .Rmd document. Revman is a freely available tool from Cochrane but it does not support bivariate analysis. Data were entered via Survey Monkey. This work has been published in journal Stroke at https://www.ahajournals.org/doi/10.1161/STROKEAHA.118.024347
 
 ### Vertigo (Bayesian)
 
@@ -129,7 +128,7 @@ This metaanalysis is designed to look at HINT examination as bedside test for di
 
 It will use the bivariate method from meta4diag package for metaanalysis. The variation on the Spot-Sign project will be the use of Bayesian approach to metaanalysis. The choice of Bayesian method is due to the small number of available studies (n<20), spare data, and which can pose a problem with convergence when performing numeric approach to maximum likelihood for bivariate model. Data will be entered via RedCap. 
 
-The exercise give above illustrates an issue with reports of diagnostic accuracy with HINT examination. Some papers report with respect to vertigo (Frontiers in Neurology 2016 August) or stroke (ACADEMIC EMERGENCY MEDICINE 2013; 20:987–996). 
+The exercise above illustrates an issue with reports of diagnostic accuracy with HINT examination. Some papers report with respect to vertigo (Frontiers in Neurology 2016 August) or stroke (ACADEMIC EMERGENCY MEDICINE 2013; 20:987–996). 
 
 ## Clinical-Trials
 
