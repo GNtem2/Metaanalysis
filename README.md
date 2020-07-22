@@ -124,7 +124,7 @@ between-study correlation in sensitivity and specificity. The current project us
 
 ### Vertigo (Bayesian)
 
-This metaanalysis is designed to look at HINT examination as bedside test for diagnosis of peripheral vertigo. In contrast to the above work, this one is in development. A recent meta-analysis of HINT has been published in European Stroke Journal 2019, Vol. 4(3) 233–239. This study did not discussed the method for performing meta-analysis or the treatment of heterogeneity.
+This metaanalysis is designed to look at HINT examination as bedside test for diagnosis of peripheral vertigo. In contrast to the above work, this one is in development. A recent meta-analysis of HINT has been published in European Stroke Journal 2019, Vol. 4(3) 233–239. This study did not discussed the method for performing meta-analysis or the treatment of heterogeneity. Further the data was presented as risk ratio, a non-traditional approach to diagnostic test.
 
 It will use the bivariate method from meta4diag package for metaanalysis. The variation on the Spot-Sign project will be the use of Bayesian approach to metaanalysis. The choice of Bayesian method is due to the small number of available studies (n<20), spare data, and which can pose a problem with convergence when performing numeric approach to maximum likelihood for bivariate model. Data will be entered via RedCap. 
 
@@ -135,6 +135,12 @@ Forest plot of sensitivity of HINT for peripheral vertigo
 
 Forest plot of specificity of HINT for peripheral vertigo
 ![here](./Vertigo/specificity_hint.png)
+
+Forest plot of Positive LR of HINT for peripheral vertigo
+![here](./Vertigo/LRpos_hint.png)
+
+Forest plot of Negative LR of HINT for peripheral vertigo
+![here](./Vertigo/LRneg_hint.png)
 
 ## Clinical-Trials
 
