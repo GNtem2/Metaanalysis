@@ -133,15 +133,15 @@ The exercise above illustrates an issue with reports of diagnostic accuracy with
 ## Clinical-Trials
 
 ### RCT
-Revman is an excellent tool for performing meta-analysis of trials. Here we will use metafor package, see rct.Rmd. The following methods are demonstrated: fixed effect and random effect analyses, forest plot, funnel plot (for exploring publication bias), Baujat plot (for exploring source of heterogeneity) and GOSH plot (for exploring study heterogeneity using output of fixed effect model for all possible subsets)
+Revman is an excellent tool for performing meta-analysis of trials but lacks the flexibility of R packages. Here we will use metafor package, see rct.Rmd. The following methods are demonstrated: fixed effect and random effect analyses, forest plot, funnel plot (for exploring publication bias), Baujat plot (for exploring source of heterogeneity) and GOSH plot (for exploring study heterogeneity using output of fixed effect model for all possible subsets). The data is from Jama Cardiology 2020 on Associations of Omega-3 Fatty Acid Supplement Use With Cardiovascular Disease Risks Meta-analysis of 10 Trials Involving 77917 Individuals
 
-Funnel plot
+Funnel plot of RCT on Associations of Omega-3 Fatty Acid Supplement Use With Cardiovascular Disease Risks
 ![here](./Clinical-Trials/RCT/funnelplot.png)
 
-Baujat plot
+Baujat plot of RCT on Associations of Omega-3 Fatty Acid Supplement Use With Cardiovascular Disease Risks
 ![here](./Clinical-Trials/RCT/baujat.png)
 
-GOSH plot
+GOSH plot of RCT on Associations of Omega-3 Fatty Acid Supplement Use With Cardiovascular Disease Risks
 ![here](./Clinical-Trials/RCT/gosh.png)
 
 Metafor has routines for performing subplots using the subset function. Another way is to use the forestplot library in the example below
