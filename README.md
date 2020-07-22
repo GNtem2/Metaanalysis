@@ -110,7 +110,9 @@ Example of 2 x 2 table is provided here. As an exercise, consider a paper about 
 
 ### Hypoxic-Coma
 
-This evaluation of tools for prognosticating hypoxic coma has been published (Neurology 2010;74:572). It assessed absent SEP, EEG (Burst suppression and isoelectric patterns), GCS motor score and asbent pupillary responses. The data (25 studies) from that paper is deposited in this repository. This study met the criteria for inclusion in the Database of Abstracts of Reviews of Effects (DARE): Quality-assessed Reviews https://www.ncbi.nlm.nih.gov/books/NBK285222/. It has been 10 years since that meta-analysis and an update is needed given the use of hypothermia in the management of hypoxic coma and the use of other tests including MRI and CT scans, serum neuron-specific enolase.
+This evaluation of tools for prognosticating hypoxic coma has been published (Neurology 2010;74:572). It assessed absent SEP, EEG (Burst suppression and isoelectric patterns), GCS motor score and asbent pupillary responses. The data (25 studies) from that paper is deposited in this repository. This study met the criteria for inclusion in the Database of Abstracts of Reviews of Effects (DARE): Quality-assessed Reviews https://www.ncbi.nlm.nih.gov/books/NBK285222/. 
+
+It has been 10 years since that meta-analysis and an update is needed given the use of hypothermia in the management of hypoxic coma and the use of other tests including MRI and CT scans, serum neuron-specific enolase. Some of the recent meta-analyses of this topic have described calculation of positive and negative LR but did not provide results for negative LR (Crit Care Med 2014). Another meta-analysis (Intensive Care Med 2013) used the bivariate model to pool sensitivity and false positive rate (1-specificity). A meta-analysis of serum lactate for prediction of coma outcome used odds ratio and hazard ratio rather than traditional method.
 
 ### ABCD2
 
