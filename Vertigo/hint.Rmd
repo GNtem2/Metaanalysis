@@ -29,8 +29,14 @@ library(mada)
 #subset data for analysis
 dat<-read.csv("vertigo160720.csv") %>% 
   select (Authors, PubYear, TP, FP, FN, TN) %>% 
+  #change column name
+  rename(studynames=Authors) %>%
   #remove row by positions 
   slice(-c(1,4,5))
+
+#correct data in row 6=kerber
+dat$FN[dat$studynames=="Kerber"]<-4
+dat$TN[dat$studynames=="Kerber"]<-78
 
 #positive likelihood
 posLR.DSL <- madauni(dat, type = "posLR", method = "DSL")
@@ -58,8 +64,6 @@ legend("bottomright", "AUC = 0.88",pch = 1:2, lty = 1:2)
 ```
 
 ```{r pubyear}
-
-
 ssr<-as.data.frame(ss$residuals)
 ssr$Year<-as.Date(as.character(dat$PubYear),"%Y")
 
@@ -78,19 +82,23 @@ library(INLA)
 library(meta4diag)
 res <- meta4diag(data = dat) 
 SROC(res, crShow = T)
+
 #sensitivity
+png(file="sensitivity_hint.png")
 forest(res, accuracy.type="sens", est.type="mean", p.cex="scaled", p.pch=15, p.col="black",
     nameShow="right", dataShow="center", estShow="left", text.cex=1,
     shade.col="gray", arrow.col="black", arrow.lty=1, arrow.lwd=1,
     cut=TRUE, intervals=c(0.025,0.975),
     main="Forest plot of Sensitivity", main.cex=1.5, axis.cex=1)
+dev.off()
+png(file="specificity_hint.png")
 #specificity
 forest(res, accuracy.type="spec", est.type="mean", p.cex="scaled", p.pch=15, p.col="black",
     nameShow="right", dataShow="center", estShow="left", text.cex=1,
     shade.col="gray", arrow.col="black", arrow.lty=1, arrow.lwd=1,
     cut=TRUE, intervals=c(0.025,0.975),
     main="Forest plot of Specificity", main.cex=1.5, axis.cex=1)
-
+dev.off()
 resLR <- meta4diag(data = dat,model.type = 2, nsample=1000) 
 forest(resLR, accuracy.type="LRpos", est.type="mean", p.cex="scaled", p.pch=15, p.col="black",
     nameShow="right", dataShow="center", estShow="left", text.cex=1,
