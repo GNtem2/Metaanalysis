@@ -159,7 +159,9 @@ The issue regarding combining data from RCT and observational studies in the set
 
 
 ### RCT
-Revman is an excellent tool for performing meta-analysis of trials but lacks the flexibility of R packages. Here we will use metafor package, see rct.Rmd. The following methods are demonstrated: fixed effect and random effect analyses, forest plot, funnel plot (for exploring publication bias), Baujat plot (for exploring source of heterogeneity) and GOSH plot (for exploring study heterogeneity using output of fixed effect model for all possible subsets). The data is from Jama Cardiology 2020 on Associations of Omega-3 Fatty Acid Supplement Use With Cardiovascular Disease Risks Meta-analysis of 10 Trials Involving 77917 Individuals.
+Revman is an excellent tool for performing meta-analysis of trials but lacks the flexibility of R packages. Here we will use metafor package, see RCT.Rmd. The following methods are demonstrated: fixed effect and random effect analyses, forest plot, funnel plot (for exploring publication bias), Baujat plot (for exploring source of heterogeneity) and GOSH plot (for exploring study heterogeneity using output of fixed effect model for all possible subsets). 
+The data is from Jama Cardiology 2020 on Associations of Omega-3 Fatty Acid Supplement Use With Cardiovascular Disease Risks Meta-analysis of 10 Trials Involving 77917 Individuals. Subsequently a meta-analysis in J Am Heart
+Assoc. 2019;8:e013543. DOI: 10.1161/JAHA.119.013543 reported that contrary to the earlier meta-analysis, Omega-3 lowers the risk of cardiovascular diseases with effect related to dose. The analysis using DerSimonian Laird method is provided in RCT.Rmd and Hartung Knapp method is provided in RCT_omega13.Rmd.
 
 Funnel plot of RCT on Associations of Omega-3 Fatty Acid Supplement Use With Cardiovascular Disease Risks
 ![here](./Clinical-Trials/RCT/funnelplot.png)

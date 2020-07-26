@@ -1,0 +1,66 @@
+---
+title: "RCT_omega13"
+author: "GNtem2"
+date: "27/07/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r jaha}
+library(metafor)
+library(tidyverse)
+
+library(tidyverse)
+library(metafor)
+
+Trials=c("GISSI-P","JELIS","GISSI-HF","DOIT","SU.FOL.OM3","Alpha Omega","OMEGA","ORIGIN","R&P","AREDS-2","VITAL")
+
+#
+Treatment_AMI=c(223,71,107,11,32,89,87,228,30,145,186)
+Treatment_No=c(5666,9326,3494,282,1253,2404,1919,6239,2147,12933,7740)
+Control_AMI=c(233,93,129,9,32,102,78,248,40,200,200)
+Control_No=c(5658,9319,3481,281,1248,2433,1885,6266,2056,12938,7740)
+
+rct<-data.frame(Trials,Treatment_AMI,Treatment_No,Control_AMI,Control_No) %>%  rename(ai=Treatment_AMI,n1i=Treatment_No,ci=Control_AMI,
+         n2i=Control_No,study=Trials)
+
+#peto's fixed effect method
+res <- rma.peto(ai=ai, n1i=n1i, ci=ci, n2i=n2i, data=rct)
+print(res, digits=2)
+
+result<-predict(res, transf=exp, digits=2)
+#forest plot
+forest(res, targs=list(study=rct$study), 
+main="RCT of Omega3 fatty acid for cardiovascular disease")
+# funnel plot 
+
+funnel(res, refline=0, level=c(90, 95, 99), shade=c("white", "gray", "darkgray"))
+
+#DL
+dat <- escalc(measure = "OR",ai=ai, n1i=n1i, ci=ci, n2i=n2i,data=rct)
+res.DL<-rma(yi,vi, method = "DL",data=dat)
+forest(res.DL,main="RCT of Omega3 fatty acid for cardiovascular disease-DL")
+
+#Hartung-ignore error message
+res.HK<-rma.uni(yi,vi=1/vi,method="FE",knha=TRUE,data=dat)
+forest(res.HK,main="RCT of Omega3 fatty acid for cardiovascular disease-DL")
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.

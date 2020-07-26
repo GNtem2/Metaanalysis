@@ -15,7 +15,7 @@ This is an R Markdown document. Markdown is a simple formatting syntax for autho
 
 When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
 
-The data is from Jama Cardiology on Associations of Omega-3 Fatty Acid Supplement Use With Cardiovascular Disease Risks Meta-analysis of 10 Trials Involving 77917 Individuals
+The data is from Jama Cardiology on Associations of Omega-3 Fatty Acid Supplement Use With Cardiovascular Disease Risks Meta-analysis of 10 Trials Involving 77917 Individuals. 
 
 ```{r metafor}
 library(tidyverse)
@@ -41,7 +41,9 @@ result<-predict(res, transf=exp, digits=2)
 forest(res, targs=list(study=rct$study), 
 main="RCT of Omega3 fatty acid for cardiovascular disease")
 # funnel plot 
+png(file="funnelplot.png")
 funnel(res, refline=0, level=c(90, 95, 99), shade=c("white", "gray", "darkgray"))
+dev.off()
 
 ```
 
@@ -49,12 +51,57 @@ funnel(res, refline=0, level=c(90, 95, 99), shade=c("white", "gray", "darkgray")
 dat <- escalc(measure = "OR",ai=ai, n1i=n1i, ci=ci, n2i=n2i,data=rct)
 res.DL<-rma(yi,vi, method = "DL",data=dat)
 forest(res.DL,main="RCT of Omega3 fatty acid for cardiovascular disease")
+
+#create subgroups
+rct1<-rct[1:5,]
+rct2<-rct[6:10,]
+rct1$group[rct1$year>=1999]<-"wide"
+rct2$group[rct2$year>=1999]<-"narrow"
+rct3<-rbind(rct1,rct2)
+dat$group<-rct3$group
+
+#plot subgroups
+res.group <- rma(yi, vi, mods = ~ group, data=dat)
+res.wide<- rma(yi, vi, subset=(group=="wide"), data=dat)
+res.wide
+res.narrow<- rma(yi, vi, subset=(group=="narrow"), data=dat)
+res.narrow
+#https://stackoverflow.com/questions/39392706/using-the-r-forestplot-package-is-there-a-way-to-assign-variable-colors-to-boxe
+#confidence interval
+rmeta_conf <- 
+  structure(list(
+    mean  = c(NA, NA, exp(-0.0676), exp(-0.0266),  NA, exp(-0.0352)), 
+    lower = c(NA, NA, exp(-0.1873), exp(-0.0715),  NA, exp(-0.0753)),
+    upper = c(NA, NA, exp(0.0520), exp(0.0183),  NA, exp(0.0049))),
+    .Names = c("mean", "lower", "upper"), 
+    row.names = c(NA, -6L), 
+    class = "data.frame")
+
+
+#table data
+tabletext<-cbind(c("","Trials","wide","narrow",NA,"Summary"),
+    c("Events","(Drugs)",sum(filter(dat,group=="wide")$ai),sum(filter(dat,group=="narrow")$ai),NA,NA),
+    c("Events","(Control)",sum(filter(dat,group=="wide")$ci),sum(filter(dat,group=="narrow")$ci),NA,NA),     
+    c("","OR","0.934","0.974",NA,"0.965")
+                 )
+
+#use forestplot
+library(forestplot)
+ forestplot(tabletext, 
+       rmeta_conf,new_page = TRUE,
+       is.summary=c(TRUE,TRUE,rep(FALSE,8),TRUE),
+       clip=c(0.1,2.5), 
+       xlog=TRUE, 
+       col=fpColors(box="royalblue",line="darkblue", summary="royalblue"))
+
 ```
 ```{r baujat}
 # adjust margins so the space is better used
+png(file="baujat.png")
 par(mar=c(5,4,2,2))
 # create Baujat plot to explore source of heterogeneity
 baujat(res.DL, xlim=c(0,20), ylim=c(0,0.2))
+dev.off()
 ```
 ```{r gosh}
 ### fit FE model to all possible subsets
@@ -63,7 +110,10 @@ sav <- gosh(res.DL)
 ### create GOSH plot
 ### red points for subsets that include and blue points
 ### for subsets that exclude study 16 (the ISIS-4 trial)
+png(file="gosh.png")
 plot(sav, out=dim(rct)[1], breaks=100)
+dev.off()
 ```
+
 
 Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
