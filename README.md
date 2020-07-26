@@ -1,6 +1,10 @@
 # Metaanalysis
 
-This project contains several metaanalyses in neurological diseases: Spot sign, Vertigo, Hypoxic-Coma and Coma. The projects are developed within the subfolders and grouped according to the type of meta-analysis: Proportions and Diagnostic Test. The work horse for meta-analysis is metafor (http://www.metafor-project.org/doku.php/analyses)
+This project contains several metaanalyses in neurological diseases: Spot sign, Vertigo, Hypoxic-Coma and Coma. The projects are developed within the subfolders and grouped according to the type of meta-analysis: Proportions and Diagnostic Test. The work horse for meta-analysis is metafor (http://www.metafor-project.org/doku.php/analyses). Practical guides for metaanalysis are available at JAMA Surg. 2020;155(5):430-431 (general guide),  BMJ 2019;364:k4597 (prognostic studies).
+
+## Random vs Fixed effect
+
+Fixed effect (Peto or Mantel-Haenszel) approaches assume that the population is the same for all studies and thus each study is the source of error. Random effect (DerSimonian Laird) assumes an additional source of error between studies.The random effect approach results in more conservate estimate of effect size confidence interval. A criticism of DerSimnonian and Laird approach is that it is prone to type I error. 25% of the significant findings with DerSimonian Laird method may be non-significant with Hartung-Knapp method (BMC Medical Research Methodology 2014, 14:25). The Hartung-Knapp method (Stat Med 2001;20:3875-89) of random effect analysis modifies the variance estimator. It employs quantile of t-distribution rather than normal distribution. The Hartung-Knapp method is available in _meta_ and _metafor_ package.
 
 ## Tidy data
 
@@ -9,6 +13,7 @@ Attention to collection of data is important as it shows the way for performing 
 ## PRISMA
 
 The first part of any metaanalysis is the PRISMA statement. This flow diagram can be generated within R using the _PRISMAstatement_ library. The example provided uses data from the Spot Sign project. An alternative approach is to use the _DiagrammeR_ library.
+
 
 ## Proportion
 
@@ -146,8 +151,13 @@ Forest plot of Negative LR of HINT for peripheral vertigo
 
 ## Clinical-Trials
 
+### Combining data from RCT and observational studies
+
+The issue regarding combining data from RCT and observational studies in the setting of an intervention is complex (AM J Epidemiol 2007;166:1203–1209 and N Engl J Med 2000; 342:1887-1892). Some investigators argued that inclusion of well conducted observational studies is approriate.
+
+
 ### RCT
-Revman is an excellent tool for performing meta-analysis of trials but lacks the flexibility of R packages. Here we will use metafor package, see rct.Rmd. The following methods are demonstrated: fixed effect and random effect analyses, forest plot, funnel plot (for exploring publication bias), Baujat plot (for exploring source of heterogeneity) and GOSH plot (for exploring study heterogeneity using output of fixed effect model for all possible subsets). The data is from Jama Cardiology 2020 on Associations of Omega-3 Fatty Acid Supplement Use With Cardiovascular Disease Risks Meta-analysis of 10 Trials Involving 77917 Individuals
+Revman is an excellent tool for performing meta-analysis of trials but lacks the flexibility of R packages. Here we will use metafor package, see rct.Rmd. The following methods are demonstrated: fixed effect and random effect analyses, forest plot, funnel plot (for exploring publication bias), Baujat plot (for exploring source of heterogeneity) and GOSH plot (for exploring study heterogeneity using output of fixed effect model for all possible subsets). The data is from Jama Cardiology 2020 on Associations of Omega-3 Fatty Acid Supplement Use With Cardiovascular Disease Risks Meta-analysis of 10 Trials Involving 77917 Individuals.
 
 Funnel plot of RCT on Associations of Omega-3 Fatty Acid Supplement Use With Cardiovascular Disease Risks
 ![here](./Clinical-Trials/RCT/funnelplot.png)
