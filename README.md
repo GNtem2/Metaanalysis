@@ -129,15 +129,24 @@ This work on the use of ABCD2 for prognostication of TIA outcome has been publis
 
 The spot sign on CTA has been used to predict hematoma growth and clinical outcome. It was considered as a surrogate for identifying intracerebral hemorrhage for durg trials. Prior approaches to metaanalysis of diagnostic studies use univariate method of Moses-Shapiro-Littenberg and which takes a reductionistic approach (combines information from the sensitivity and specificity). The current recommendation for metaanalysis of diagnostic studies is the bivariate method of Reitmas which preserves the dual nature of the data (sensitivity and specificity) in the treatment of covariates in meta-regression. Similar to the univariate method, the
 bivariate method employs a random effect to take into account the within study correlation. Additionally, the bivariate method also accounts for the
-between-study correlation in sensitivity and specificity. The current project uses mada package on CRAN. It uses a bivariate method from mada package to assess spot sign as diagnostic test. There's also illustration of metaregression. It also contains codes for assessing positive predictive value. The codes are available in .Rmd document. Revman is a freely available tool from Cochrane but it does not support bivariate analysis. Data were entered via Survey Monkey. This work has been published in journal Stroke at https://www.ahajournals.org/doi/10.1161/STROKEAHA.118.024347
+between-study correlation in sensitivity and specificity. The current project uses mada package on CRAN. It uses a bivariate method from mada package to assess spot sign as diagnostic test. There's also illustration of metaregression. It also contains codes for assessing positive predictive value. The codes are available in .Rmd document. Revman is a freely available tool from Cochrane but it does not support bivariate analysis. Data were entered via Survey Monkey. This work has been published in journal Stroke at https://www.ahajournals.org/doi/10.1161/STROKEAHA.118.024347. Fagan's normogram can be created using _nomogrammer_ package.
+
+```r
+library(nomogrammer)
+p<-nomogrammer(Prevalence = .234, Plr = 4.85, Nlr = 0.49)
+p+ggtitle("Fagan's normogram for Spot Sign and ICH growth")
+ggsave(p,file="Fagan_SpotSign.png",width=5.99,height=3.99,units="in")
+```
+Fagan's normogram for Spot Sign and ICH growth
+![here](./Spot-Sign/Fagan_SpotSign.png)
 
 ### Vertigo (Bayesian)
 
-This metaanalysis is designed to look at HINT examination as bedside test for diagnosis of peripheral vertigo. In contrast to the above work, this one is in development. A recent meta-analysis of HINT has been published in European Stroke Journal 2019, Vol. 4(3) 233–239. This study did not discussed the method for performing meta-analysis or the treatment of heterogeneity. Further the data was presented as risk ratio, a non-traditional approach to diagnostic test.
+This metaanalysis is designed to look at HINT examination as bedside test for diagnosis of peripheral vertigo. In contrast to the above work, this one is in development. A recent meta-analysis of HINT has been published in European Stroke Journal 2019, Vol. 4(3) 233-239. This study did not discussed the method for performing meta-analysis or the treatment of heterogeneity. Further the data was presented as risk ratio, a non-traditional approach to diagnostic test.
 
 It will use the bivariate method from meta4diag package for metaanalysis. The variation on the Spot-Sign project will be the use of Bayesian approach to metaanalysis. The choice of Bayesian method is due to the small number of available studies (n<20), spare data, and which can pose a problem with convergence when performing numeric approach to maximum likelihood for bivariate model. Data will be entered via RedCap. 
 
-The exercise above illustrates an issue with reports of diagnostic accuracy with HINT examination. Some papers report with respect to vertigo (Frontiers in Neurology 2016 August) or stroke (ACADEMIC EMERGENCY MEDICINE 2013; 20:987–996). 
+The exercise above illustrates an issue with reports of diagnostic accuracy with HINT examination. Some papers report with respect to vertigo (Frontiers in Neurology 2016 August) or stroke (ACADEMIC EMERGENCY MEDICINE 2013; 20:987-996). 
 
 Forest plot of sensitivity of HINT for peripheral vertigo
 ![here](./Vertigo/sensitivity_hint.png)
