@@ -209,6 +209,35 @@ forestplot(tabletext,
            col=fpColors(box="royalblue",line="darkblue", summary="royalblue"))
 ```
 
+Powerpoint slides can be created directly from R using officer package.
+
+```r
+library(officer)
+library(tidyverse)
+library(flextable)
+
+#initialise ppt
+my_pres<-read_pptx() %>%
+
+#add first slide
+add_slide(layout = "Title and Content", master = "Office Theme") %>%
+ph_with(value = "Vertigo Meta-analysis", location = ph_location_type(type = "title"))%>% ph_with(value = flextable(dat), location = ph_location_type(type = "body")) %>%
+
+
+#add png to second slide
+add_slide(layout = "Title and Content", master = "Office Theme") %>%
+ph_with(value = "Vertigo Meta-analysis", location = ph_location_type(type = "title")) %>%
+ph_with(value = external_img("LRpos_hint.png"), location = ph_location_type(type = "body")) %>%
+
+#add ggplot figure to third slide
+add_slide(layout = "Title and Content", master = "Office Theme") %>%
+ph_with(value = "Metaregression", location =ph_location_type(type = "title")) %>%
+ph_with(value = p, location = ph_location_type(type = "body")) 
+
+print(my_pres, target = "Vertigo.pptx")
+
+```
+
 ### Network-Metaanalysis
 
 This project is under development. There are several methods varying between frequentist (netmeta) to Bayesian methods (nmalINLA and gemtc). 

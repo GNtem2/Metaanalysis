@@ -28,9 +28,9 @@ library(mada)
 #new data
 #subset data for analysis
 dat<-read.csv("vertigo160720.csv") %>% 
-  select (Authors, PubYear, TP, FP, FN, TN) %>% 
+  select (Authors, PubYear, TP, FP, FN, TN, Setting) %>% 
   #change column name
-  rename(studynames=Authors) %>%
+  rename(`study names`=Authors) %>%
   #remove row by positions 
   slice(-c(1,4,5))
 
@@ -99,18 +99,50 @@ forest(res, accuracy.type="spec", est.type="mean", p.cex="scaled", p.pch=15, p.c
     cut=TRUE, intervals=c(0.025,0.975),
     main="Forest plot of Specificity", main.cex=1.5, axis.cex=1)
 dev.off()
+
 resLR <- meta4diag(data = dat,model.type = 2, nsample=1000) 
+
+png(file="LRpos_hint.png")
 forest(resLR, accuracy.type="LRpos", est.type="mean", p.cex="scaled", p.pch=15, p.col="black",
     nameShow="right", dataShow="center", estShow="left", text.cex=1,
     shade.col="gray", arrow.col="black", arrow.lty=1, arrow.lwd=1,
     cut=TRUE, intervals=c(0.025,0.975),
     main="Forest plot of Positive LR", main.cex=1.5, axis.cex=1)
+dev.off()
 
+png(file="LRneg_hint.png")
 forest(resLR, accuracy.type="LRneg", est.type="mean", p.cex="scaled", p.pch=15, p.col="black",
     nameShow="right", dataShow="center", estShow="left", text.cex=1,
     shade.col="gray", arrow.col="black", arrow.lty=1, arrow.lwd=1,
     cut=TRUE, intervals=c(0.025,0.975),
     main="Forest plot of Negative LR", main.cex=1.5, axis.cex=1)
+dev.off()
 
+```
+
+```{r ppt}
+library(officer)
+library(tidyverse)
+library(flextable)
+
+#initialise ppt
+my_pres<-read_pptx() %>%
+
+#add first slide
+add_slide(layout = "Title and Content", master = "Office Theme") %>%
+ph_with(value = "Vertigo Meta-analysis", location = ph_location_type(type = "title"))%>% ph_with(value = flextable(dat), location = ph_location_type(type = "body")) %>%
+
+
+#add png to second slide
+add_slide(layout = "Title and Content", master = "Office Theme") %>%
+ph_with(value = "Vertigo Meta-analysis", location = ph_location_type(type = "title")) %>%
+ph_with(value = external_img("LRpos_hint.png"), location = ph_location_type(type = "body")) %>%
+
+#add ggplot figure to third slide
+add_slide(layout = "Title and Content", master = "Office Theme") %>%
+ph_with(value = "Metaregression", location =ph_location_type(type = "title")) %>%
+ph_with(value = p, location = ph_location_type(type = "body")) 
+
+print(my_pres, target = "Vertigo.pptx")
 ```
 Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
