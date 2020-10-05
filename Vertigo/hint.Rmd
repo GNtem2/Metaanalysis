@@ -81,7 +81,9 @@ q
 library(INLA)
 library(meta4diag)
 res <- meta4diag(data = dat) 
+png(file="SROC_hint.png")
 SROC(res, crShow = T)
+dev.off()
 
 #sensitivity
 png(file="sensitivity_hint.png")
@@ -91,6 +93,7 @@ forest(res, accuracy.type="sens", est.type="mean", p.cex="scaled", p.pch=15, p.c
     cut=TRUE, intervals=c(0.025,0.975),
     main="Forest plot of Sensitivity", main.cex=1.5, axis.cex=1)
 dev.off()
+
 png(file="specificity_hint.png")
 #specificity
 forest(res, accuracy.type="spec", est.type="mean", p.cex="scaled", p.pch=15, p.col="black",
@@ -127,18 +130,33 @@ library(flextable)
 
 #initialise ppt
 my_pres<-read_pptx() %>%
-
+add_slide(layout = "Title and Content", master = "Office Theme") %>%
+ph_with(value = "Vertigo Meta-analysis-Bayesian Approach", location = ph_location_type(type = "title"))%>% ph_with(value = c("Bivariate analysis","Bayesian approach appropriate for small sample size","Integrated Nested Laplacian Analysis"), location = ph_location_type(type = "body")) %>%
+  
 #add first slide
 add_slide(layout = "Title and Content", master = "Office Theme") %>%
-ph_with(value = "Vertigo Meta-analysis", location = ph_location_type(type = "title"))%>% ph_with(value = flextable(dat), location = ph_location_type(type = "body")) %>%
-
-
+ph_with(value = "Vertigo Meta-analysis-Bayesian Approach", location = ph_location_type(type = "title"))%>% ph_with(value = flextable(dat), location = ph_location_type(type = "body")) %>%
+  
 #add png to second slide
 add_slide(layout = "Title and Content", master = "Office Theme") %>%
-ph_with(value = "Vertigo Meta-analysis", location = ph_location_type(type = "title")) %>%
-ph_with(value = external_img("LRpos_hint.png"), location = ph_location_type(type = "body")) %>%
-
-#add ggplot figure to third slide
+ph_with(value = "Vertigo Meta-analysis-SROC", location = ph_location_type(type = "title")) %>%
+ph_with(value = external_img("SROC_hint.png"), location = ph_location_type(type = "body")) %>%
+  
+#add png to third slide
+  add_slide(layout = "Two Content", master = "Office Theme") %>%
+  ph_with(value = "Sensitivity and Specificty of HINT",
+          location=ph_location_type(type="title")) %>%
+  ph_with(value = external_img("sensitivity_hint.png"),location = ph_location_left() ) %>%
+  ph_with(value = external_img("specificity_hint.png"),location = ph_location_right() ) %>%
+  
+#add png to fourth slide  
+add_slide(layout = "Two Content", master = "Office Theme") %>%
+  ph_with(value = "Positive and Negative LR of HINT",
+          location=ph_location_type(type="title")) %>%
+  ph_with(value = external_img("LRpos_hint.png"),location = ph_location_left() ) %>%
+  ph_with(value = external_img("LRneg_hint.png"),location = ph_location_right() ) %>%
+  
+#add ggplot figure to fifth slide
 add_slide(layout = "Title and Content", master = "Office Theme") %>%
 ph_with(value = "Metaregression", location =ph_location_type(type = "title")) %>%
 ph_with(value = p, location = ph_location_type(type = "body")) 
