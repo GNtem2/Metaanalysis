@@ -1,0 +1,12 @@
+Study,Year  ,SampleSize,IpsStroke ,IpsStrokeTIA ,AnyStroke ,AnyStrokeTIA 
+Johnson,1985,121,3.3,19.0,,
+Toronto,1986,113,0.0,7.9,1.9,10.7
+VACS,1993,233,2.4,5.2,3.0,6.1
+ACAS,1995,834,2.3,4.5,3.8,
+ECST ,1995,127,2.3,,,
+ACBS,1997,357,1.2,3.4,2.1,5.8
+CHS,1998,185,1.2,,2.6,
+NASCET ,2000,216,,,,
+ACSRS,2005,1115,1.3,3.1,,
+ASED,2005,202,1.2,3.2,2.4,5.6
+SMART ,2007,221,0.6,,0.7,

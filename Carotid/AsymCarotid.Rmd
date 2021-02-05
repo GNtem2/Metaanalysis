@@ -1,0 +1,47 @@
+---
+title: "AsymCarotid"
+author: "GNtem2"
+date: "05/02/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r carotid}
+library(metafor)
+library(tidyverse)
+carotid<-read.csv("CarotidPapers.csv") 
+
+#subset and remove NA
+carotid2<- carotid%>%
+  select(Study, Year, SampleSize, IpsStroke) %>%
+  mutate(xi=IpsStroke,
+         ni=SampleSize,
+         pi=xi/ni) %>% na.omit()
+carotid2 <- escalc(measure="PFT", xi=xi, ni=ni, data=carotid2, add=0)	
+res <- rma(yi, vi, method="REML", data=carotid2, slab=paste(Study))
+
+#forest plot
+forest(res, transf=transf.ipft.hm, targs=list(ni=carotid2$ni), xlim=c(-1,1.5),refline=0.004,cex=.8, ilab=cbind(carotid2$xi, carotid2$ni),
+       ilab.xpos=c(-.6,-.4),digits=3)
+
+op <- par(cex=.75, font=2)
+#vertical position 11.5
+text(-1.0, 11.5, "Study ",     pos=4)
+text(c(-.55,-.2), 11.5, c("Ipsilateral Stroke", 	" total subjects"))
+text(1.4, 11.5, "frequency [95% CI]", pos=2)
+par(op)
+
+```
+
+
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
