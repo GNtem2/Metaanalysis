@@ -48,11 +48,11 @@ par(op)
 
 ### TIA
 
-This metaanalysis examines the rate of stroke recurrence following management in rapid TIA clinic. This study is in development.
+This metaanalysis examines the rate of stroke recurrence following management in rapid TIA clinic. The project will combine observational studies and RCT. This study is in development.
 
 ### Aneurysm
 
-This metaanalysis is designed to examine the rate of rupture of aneurysm. The choice of method depends on whether the rate of rupture is framing of the confidence interval. This study is in development.
+This metaanalysis is designed to examine the rate of rupture of aneurysm. This study is in development.
 
 ### First Seizure
 
@@ -132,7 +132,7 @@ bivariate method employs a random effect to take into account the within study c
 between-study correlation in sensitivity and specificity. The current project uses mada package on CRAN. It uses a bivariate method from mada package to assess spot sign as diagnostic test. There's also illustration of metaregression. It also contains codes for assessing positive predictive value. The codes are available in .Rmd document. Revman is a freely available tool from Cochrane but it does not support bivariate analysis. Data were entered via Survey Monkey. This work has been published in journal Stroke at https://www.ahajournals.org/doi/10.1161/STROKEAHA.118.024347. Fagan's normogram can be created using _nomogrammer_ package.
 
 ```r
-library(nomogrammer)
+source("https://raw.githubusercontent.com/achekroud/nomogrammer/master/nomogrammer.r")
 p<-nomogrammer(Prevalence = .234, Plr = 4.85, Nlr = 0.49)
 p+ggtitle("Fagan's normogram for Spot Sign and ICH growth")
 ggsave(p,file="Fagan_SpotSign.png",width=5.99,height=3.99,units="in")
@@ -182,6 +182,7 @@ GOSH plot of RCT on Associations of Omega-3 Fatty Acid Supplement Use With Cardi
 ![here](./Clinical-Trials/RCT/gosh.png)
 
 Metafor has routines for performing subplots using the subset function. Another way is to use the forestplot library in the example below
+
 ```r
 rmeta_conf <- 
   structure(list(
@@ -209,7 +210,7 @@ forestplot(tabletext,
            col=fpColors(box="royalblue",line="darkblue", summary="royalblue"))
 ```
 
-Powerpoint slides can be created directly from R using officer package.
+Powerpoint slides can be created directly from R using officer package. This chunk of code is available within hint.Rmd in Vertigo subfolder.
 
 ```r
 library(officer)
@@ -240,7 +241,7 @@ print(my_pres, target = "Vertigo.pptx")
 
 ### Network-Metaanalysis
 
-This project is under development. There are several methods varying between frequentist (netmeta) to Bayesian methods (nmalINLA and gemtc). 
+Network metanalysis is proposed to be useful for comparing drugs from multiple RCT in which there is no direct comparison. An example in stroke would be a comparison of the different NOAC anticoagulants. Another use is to combine RCT and observation studies. This project is under development. There are several methods varying between frequentist (netmeta) to Bayesian methods (nmalINLA and gemtc). 
 
 
 ## Git commands
