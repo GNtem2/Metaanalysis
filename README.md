@@ -140,6 +140,10 @@ ggsave(p,file="Fagan_SpotSign.png",width=5.99,height=3.99,units="in")
 Fagan's normogram for Spot Sign and ICH growth
 ![here](./Spot-Sign/Fagan_SpotSign.png)
 
+### MOGAG (Myelin oligodendrocyte glycoprotein-IgG1–associated disorder)
+This metaanalysis is designed to look at MOG antibidies for the diagnosis of MOGAD. The recent paper by Sechi in Jama Neurol 2021 highlighted the problem with with test in patients with multiple sclerosis. In that study, there were 92 positive cases (TP=66, FP=26) resulting in PPV of 72%. In this meta-analysis we will calculate the positive and negative likelihood ratios and post-test probability.
+
+
 ### Vertigo (Bayesian)
 
 This metaanalysis is designed to look at HINT examination as bedside test for diagnosis of peripheral vertigo. In contrast to the above work, this one is in development. A recent meta-analysis of HINT has been published in European Stroke Journal 2019, Vol. 4(3) 233-239. This study did not discussed the method for performing meta-analysis or the treatment of heterogeneity. Further the data was presented as risk ratio, a non-traditional approach to diagnostic test.
