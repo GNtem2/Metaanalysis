@@ -18,13 +18,14 @@ When you click the **Knit** button a document will be generated that includes bo
 ```{r carotid}
 library(metafor)
 library(tidyverse)
-carotid<-read.csv("CarotidPapers.csv") 
+#carotid<-read.csv("CarotidPapers.csv") 
+carotid<-readxl::read_xlsx("Stroke_Metaanalysis_RawData.xlsx")
 
 #subset and remove NA
 carotid2<- carotid%>%
-  select(Study, Year, SampleSize, IpsStroke) %>%
+  select(Study, PubYear, SampleSizePts, IpsStroke) %>%
   mutate(xi=IpsStroke,
-         ni=SampleSize,
+         ni=SampleSizePts,
          pi=xi/ni) %>% na.omit()
 carotid2 <- escalc(measure="PFT", xi=xi, ni=ni, data=carotid2, add=0)	
 res <- rma(yi, vi, method="REML", data=carotid2, slab=paste(Study))
@@ -34,10 +35,11 @@ forest(res, transf=transf.ipft.hm, targs=list(ni=carotid2$ni), xlim=c(-1,1.5),re
        ilab.xpos=c(-.6,-.4),digits=3)
 
 op <- par(cex=.75, font=2)
-#vertical position 11.5
-text(-1.0, 11.5, "Study ",     pos=4)
-text(c(-.55,-.2), 11.5, c("Ipsilateral Stroke", 	" total subjects"))
-text(1.4, 11.5, "frequency [95% CI]", pos=2)
+#vertical position 12.5
+text(-1.0, 12.5, "Study ",     pos=4)
+text(-.6, 13.1, c("Ipsilateral"))
+text(c(-.6,-.35), 12.5, c("Stroke", 	"subjects"))
+text(1.4, 12.5, "frequency [95% CI]", pos=2)
 par(op)
 
 ```
