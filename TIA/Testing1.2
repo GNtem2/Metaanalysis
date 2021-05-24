@@ -1,0 +1,107 @@
+##### Import dataset #####
+library(readr)
+# Tidy <- read_csv("C:/Users/Andy/Google Drive (andy.lim2@monash.edu)/Monash PhDMed 0047/Phase II - Systematic Review and Meta-Analysis/Study Characteristics Including TIA 2.5.csv")
+Tidy <- read_csv("C:/Users/alim0/Google Drive (andy.lim2@monash.edu)/Monash PhDMed 0047/Phase II - Systematic Review and Meta-Analysis/Study Characteristics Including TIA 2.5.csv")
+View(Tidy)
+
+library(metafor) ; library(dplyr) ; library(ggpubr)
+
+
+##### Perform meta-analysis #####
+# All retained studies
+dat <- filter(Tidy, Retain == TRUE) # Only keep retained studies
+dat$model <- c(dat$Study)
+dat$xi <- c(dat$Isch_stroke)
+dat$ni <- c(dat$Participants)
+dat$pi <- with(dat, xi/ni) #calculate new variable pi base on ratio xi/ni
+dat <- escalc(measure="PFT", xi=xi, ni=ni, data=dat, add=0, slab=paste(Study, Pub_year, sep=", "))	#Freeman-Tukey double arcsine transformation
+res <- rma(yi, vi, method="REML", data=dat) # REML = restricted maximum-likelihood estimator, a method to estimate amount of heterogeneity
+res 
+# Cochran's Q is significant when the true outcomes are heterogeneous
+# I^2 estimates how much of the total variability in the estimates (total variability = heterogeneity + sampling variability) is heterogeneity
+# H^2 is ratio of total variability to sampling variability
+predict(res, transf=transf.ipft.hm, targs=list(ni=dat$ni)) # Transform the output back to a proportion
+confint(res)
+
+# Count number of participants
+sum(dat$Participants)
+sum(dat$TIA)
+
+# Create forest plot  
+par(cex = 0.9)
+forest(res, transf=transf.ipft.hm, targs=list(ni=dat$ni), # transf.ipft.hm = inverse of Freeman-Tukey (double arcsine) transformation for proportions
+       xlim=c(-1,0.7),refline=0.000,cex=.75, ilab=cbind(dat$xi, dat$ni), # cex = font size
+       ilab.xpos=c(-.5,-.3),digits=3, mlab="", header="Study")
+op <- par(cex=.75, font=2)
+text(c(-.48,-.26), 31, c("Outcomes", "Total Subjects"))
+par(op)
+
+### add text with Q-value, dfs, p-value, and I^2 statistic
+text(-1, -1, pos=4, cex=0.75, bquote(paste("RE Model (Q = ",
+                                           .(formatC(res$QE, digits=2, format="f")), ", df = ", .(res$k - res$p),
+                                           ", p = ", .(formatC(res$QEp, digits=2, format="f")), "; ", I^2, " = ",
+                                           .(formatC(res$I2, digits=1, format="f")), "%)")))
+
+
+
+##### Perform subgroup analysis by study type#####
+
+### set up forest plot (with 2x2 table counts added; the 'rows' argument is
+### used to specify in which rows the outcomes will be plotted)
+par(cex = 0.9) # Font size
+forest(res, transf=transf.ipft.hm, targs=list(ni=dat$ni), 
+       xlim=c(-1,0.7),refline=0.000,cex=.75, ilab=cbind(dat$xi, dat$ni), # cex = font size
+       ilab.xpos=c(-.5,-.3), digits=3, mlab="", header="Study", ylim=c(-1, 43),
+       order=order(dat$Study_type), rows=c(3:17,22:28,33:39)) # Split into subgroups by Study_type
+
+op <- par(cex=.75, font=2)
+text(c(-.48,-.26), 42, c("Outcomes", "Total Subjects")) # Label the columns
+par(op)
+
+
+### add text with Q-value, dfs, p-value, and I^2 statistic
+text(-1, -1, pos=4, cex=0.75, bquote(paste("RE Model for All Studies (Q = ",
+                                           .(formatC(res$QE, digits=2, format="f")), ", df = ", .(res$k - res$p),
+                                           ", p = ", .(formatC(res$QEp, digits=2, format="f")), "; ", I^2, " = ",
+                                           .(formatC(res$I2, digits=1, format="f")), "%)")))
+
+### fit meta-regression model to test for subgroup differences
+res.sub <- rma(yi, vi, method="REML", mods = ~ Study_type, data=dat) # Perform metaregression using Study_type as the only modifier
+
+### add text for the test of subgroup differences
+text(-1, -2, pos=4, cex=0.75, bquote(paste("Test for Subgroup Differences: ",
+                                           Q[M], " = ", .(formatC(res.sub$QM, digits=2, format="f")), ", df = ", .(res$p - 1),
+                                           ", p = ", .(formatC(res.sub$QMp, digits=2, format="f")))))
+
+### set font expansion factor (as in forest() above) and use bold italic
+### font and save original settings in object 'op'
+op <- par(cex=0.75, font=4)
+
+### add text for the subgroups
+text(-1, c(40,29,18), pos=4, c("RCT experimental",
+                               "RCT control",
+                               "Observational"))
+
+### fit random-effects model in the three subgroups
+res.e <- rma(yi, vi, subset=(Study_type=="RCT experimental"), data=dat)
+res.c <- rma(yi, vi, subset=(Study_type=="RCT control"), data=dat)
+res.v <- rma(yi, vi, subset=(Study_type=="Observational"), data=dat)
+
+### add summary polygons for the three subgroups
+addpoly(res.e, row= 32, cex = 0.9, transf=transf.ipft.hm, targs=list(ni=dat$ni), digits=3, mlab="")
+addpoly(res.c, row= 21, cex = 0.9, transf=transf.ipft.hm, targs=list(ni=dat$ni), digits=3, mlab="")
+addpoly(res.v, row= 2, cex = 0.9, transf=transf.ipft.hm, targs=list(ni=dat$ni), digits=3, mlab="")
+
+### add text with Q-value, dfs, p-value, and I^2 statistic for subgroups
+text(-1, 32, pos=4, cex=0.9, bquote(paste("RE Model for Subgroup (Q = ",
+                                          .(formatC(res.e$QE, digits=2, format="f")), ", df = ", .(res.e$k - res.e$p),
+                                          ", p = ", .(formatC(res.e$QEp, digits=2, format="f")), "; ", I^2, " = ",
+                                          .(formatC(res.e$I2, digits=1, format="f")), "%)")))
+text(-1, 21, pos=4, cex=0.9, bquote(paste("RE Model for Subgroup (Q = ",
+                                          .(formatC(res.c$QE, digits=2, format="f")), ", df = ", .(res.c$k - res.c$p),
+                                          ", p = ", .(formatC(res.c$QEp, digits=2, format="f")), "; ", I^2, " = ",
+                                          .(formatC(res.c$I2, digits=1, format="f")), "%)")))
+text(-1, 2, pos=4, cex=0.9, bquote(paste("RE Model for Subgroup (Q = ",
+                                         .(formatC(res.v$QE, digits=2, format="f")), ", df = ", .(res.v$k - res.v$p),
+                                         ", p = ", .(formatC(res.v$QEp, digits=2, format="f")), "; ", I^2, " = ",
+                                         .(formatC(res.v$I2, digits=1, format="f")), "%)")))
