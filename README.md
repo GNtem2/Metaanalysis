@@ -166,7 +166,7 @@ Forest plot of Negative LR of HINT for peripheral vertigo
 
 ## Perfusion imaging
 
-Perfusion imaging is now used for assessment and planning therapy of patients with acute ischemic stroke. However, it's not clear what the optimal setting should be. For example, earlier studies have used Tmax of 2 seconds while later studies have used 6 seconds. 
+Perfusion imaging is now used for assessment and planning therapy of patients with acute ischemic stroke. However, it's not clear what the optimal setting should be. For example, earlier studies have used Tmax of 2 seconds while later studies have used 6 seconds. In this project we will be using library diagmeta. 
 
 ## Clinical-Trials
 
