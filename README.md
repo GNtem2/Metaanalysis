@@ -164,6 +164,10 @@ Forest plot of Positive LR of HINT for peripheral vertigo
 Forest plot of Negative LR of HINT for peripheral vertigo
 ![here](./Vertigo/LRneg_hint.png)
 
+## Perfusion imaging
+
+Perfusion imaging is now used for assessment and planning therapy of patients with acute ischemic stroke. However, it's not clear what the optimal setting should be. For example, earlier studies have used Tmax of 2 seconds while later studies have used 6 seconds. 
+
 ## Clinical-Trials
 
 ### Combining data from RCT and observational studies
