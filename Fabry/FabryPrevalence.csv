@@ -1,0 +1,11 @@
+Author,Year,Country,Total,Fabry,Male,FabryMale,Female,FabryFemale,,ICHincluded,TIAincluded,RestricyedInclusion,hypertension
+,,,,,,,,,,,,,
+rolfs,2005,Germany,721,28,432,21,289,7,,,,,
+brouns,2007,Belgium,103,0,64,0,39,0,,,,,
+baptista,2010,Portugal,493,6,300,3,193,3,,,,,
+brouns,2010,Belgium,1000,10,547,2,453,3,,,,,
+wozniak,2010,USA,154,1,154,1,,,,,,,
+lanthier,2017,Canada,365,1,,1,,0,,no,yes,,
+monash,2021,Australia,205,0,192,0,13,0,,yes,no,no,
+malavera,2020,Australia,58,0,35,0,23,1,,,,no,
+bersano,2016,Italy,33,1,,,,,,yes,yes,yes,
