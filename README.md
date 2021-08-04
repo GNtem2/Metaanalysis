@@ -101,17 +101,17 @@ Example of 2 x 2 table is provided here. As an exercise, consider a paper about 
             Disease Positive     Disease Negative
 ####################################################
 # HIT Test#                 #                      #
-# Positive# True Positive   # False Positive       #  
-#         #     7          #       72              #
+# Negative# True Positive   # False Positive       #  
+#         #     35          #       0              #
 ####################################################
 # HIT Test#                 #                      #
-# Negative# False Negative  # True Negative        #
-#         #     35           #      0              # 
+# Positive# False Negative  # True Negative        #
+#         #     7           #      72              # 
 ####################################################
 
 #Stroke
-#Sensitiviy=TP/(TP+FN)=17%
-#Specificity=TN/(TN+FP)=0%
+#Sensitiviy=TP/(TP+FN)=83%
+#Specificity=TN/(TN+FP)=100%
 
 ```
 
