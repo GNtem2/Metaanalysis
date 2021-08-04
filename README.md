@@ -101,11 +101,11 @@ Example of 2 x 2 table is provided here. As an exercise, consider a paper about 
             Disease Positive     Disease Negative
 ####################################################
 # HIT Test#                 #                      #
-# Positive# True Positive   # False Positive       #  
+# Negative# True Positive   # False Positive       #  
 #         #     7          #       72              #
 ####################################################
 # HIT Test#                 #                      #
-# Negative# False Negative  # True Negative        #
+# Positive# False Negative  # True Negative        #
 #         #     35           #      0              # 
 ####################################################
 
