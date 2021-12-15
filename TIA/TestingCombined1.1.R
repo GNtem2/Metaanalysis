@@ -86,6 +86,7 @@ text(-1, -1, pos=4, cex=0.75, bquote(paste("RE Model (Q = ",
 # Year_start i.e. Start year of cohort accrual
 # Pub_year i.e. year of publication
 # Continent i.e. Continent where studies were performed
+# international i.e. international or single-country
 
 # All studies
 res <- rma(yi, vi, method="REML", mods = ~ Study_type_3, data=dat)
